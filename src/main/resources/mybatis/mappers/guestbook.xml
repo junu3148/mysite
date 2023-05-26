@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="guestbook">
+
+	<!-- addList -->
+	<insert id="addList" parameterType="GuestBookVO">
+		<![CDATA[
+		insert into register
+							(boardId, 
+							 name, 
+							 pwd, 
+							 content, 
+							 regdate) 
+					 values 
+					 		(register_seq.nextval,
+					 		 #{name}, 
+					 		 #{pwd}, 
+					 		 #{content}, 
+					 		 sysdate)
+		]]>
+
+	</insert>
+
+	<!-- getGuestBookList -->
+	<select id="getGuestBookList" resultType="GuestBookVO">
+		<![CDATA[
+		select 	boardId, 
+				name, 
+				pwd, 
+				content, 
+				regdate
+		from register
+		order by boardId desc		 
+		
+		]]>
+
+	</select>
+
+	<!-- deleteGuestBook -->
+	<select id="deleteGuestBook" parameterType="GuestBookVO">
+		<![CDATA[
+		delete from register 
+			
+			where boardId = #{boardId} and pwd = #{pwd}
+		
+		]]>
+
+	</select>
+
+
+
+
+</mapper>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<!-- insertBoard -->
+	<insert id="insertBoard" parameterType="BoardVO">
+
+	<![CDATA[
+		INSERT INTO board 
+			(no, title, content, hit, reg_date, user_no)
+		VALUES 
+			(seq_board_no.nextval , #{title}, #{content}, 0, SYSDATE, #{userNo})
+			
+	]]>
+
+	</insert>
+
+	<!-- getBoardList -->
+	<select id="getBoardList" resultType="BoardVO">
+
+	<![CDATA[
+		select  a.no,
+		        b.name,
+		        a.title,  
+		        a.content,   
+		        a.hit,   
+		        a.reg_date regDate,   
+		        a.user_no userNo
+		from board a join users b 
+		on a.user_no = b.no
+	]]>
+
+	</select>
+
+	<!-- serchBoardList -->
+	<select id="serchBoardList" parameterType="String"
+		resultType="BoardVO">
+
+	<![CDATA[
+		SELECT a.no,
+		       b.name,
+		       a.title,
+		       a.content,
+		       a.hit,
+		       a.reg_date AS regDate,
+		       a.user_no AS userNo
+		FROM board a
+		JOIN users b ON a.user_no = b.no
+		WHERE title LIKE '%${value}%'
+	]]>
+
+	</select>
+
+	<!-- getBoard -->
+	<select id="getBoard" parameterType="String"
+		resultType="BoardVO">
+
+	<![CDATA[
+		SELECT a.no,
+		       b.name,
+		       a.title,
+		       a.content,
+		       a.hit,
+		       a.reg_date AS regDate,
+		       a.user_no AS userNo
+		FROM board a
+		JOIN users b ON a.user_no = b.no
+		WHERE a.no = #{no}
+	]]>
+
+	</select>
+
+
+	<delete id="deleteBoard" parameterType="BoardVO">
+	<![CDATA[
+	
+		delete from board
+				where no = #{no}
+	
+	]]>
+
+	</delete>
+
+	<update id="updateBoard" parameterType="BoardVO">
+	<![CDATA[
+		update board set  
+	            title= #{title},
+	            content = #{content}
+				where no = #{no}
+	
+	]]>
+
+	</update>
+	
+		<update id="hitPlus" parameterType="BoardVO">
+	<![CDATA[
+		update board set  
+	            hit = hit+1
+				where no = #{no}
+	
+	]]>
+
+	</update>
+
+
+
+
+
+</mapper>

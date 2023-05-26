@@ -1,3 +1,4 @@
+
 package com.javaex.controller;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class BoardController {
 
 		List<BoardVO> boardList = boardService.getBoardList();
 		model.addAttribute("boardList", boardList);
-
+ 
 		return "/board/list";
 	}
 
@@ -113,5 +114,7 @@ public class BoardController {
 
 		return "redirect:/board/list";
 	}
+	
+
 
 }

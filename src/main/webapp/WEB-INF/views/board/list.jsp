@@ -10,6 +10,7 @@
 	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/board.css"
 	rel="stylesheet" type="text/css">
+	
 
 </head>
 
@@ -85,17 +86,17 @@
 
 					<div id="paging">
 						<ul>
-							<li><a href="">◀</a></li>
-							<li><a href="">1</a></li>
-							<li><a href="">2</a></li>
-							<li><a href="">3</a></li>
-							<li><a href="">4</a></li>
-							<li class="active"><a href="">5</a></li>
-							<li><a href="">6</a></li>
-							<li><a href="">7</a></li>
-							<li><a href="">8</a></li>
-							<li><a href="">9</a></li>
-							<li><a href="">10</a></li>
+							<li><a href="" >◀</a></li>
+							<li><a href="/board/list?int=1" >1</a></li>
+							<li><a href="/board/list?int=2">2</a></li>
+							<li><a href="/board/list?int=3">3</a></li>
+							<li><a href="/board/list?int=4">4</a></li>
+							<li class="active"><a href="/board/list?int=5">5</a></li>
+							<li><a href="/board/list?int=6">6</a></li>
+							<li><a href="/board/list?int=7">7</a></li>
+							<li><a href="/board/list?int=8">8</a></li>
+							<li><a href="/board/list?int=9">9</a></li>
+							<li><a href="/board/list?int=10">10</a></li>
 							<li><a href="">▶</a></li>
 						</ul>
 

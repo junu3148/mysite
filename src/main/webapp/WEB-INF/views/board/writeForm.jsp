@@ -11,6 +11,16 @@
 <link href="${pageContext.request.contextPath}/assets/css/board.css"
 	rel="stylesheet" type="text/css">
 
+<script type="text/javascript">
+	//enter => <br>
+	var text = document.getElementById("textarea").value;
+	text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
+
+	//<br> => enter
+	var text = document.getElementById("textarea").value;
+	text = text.replaceAll("<br>", "\r\n");
+</script>
+
 </head>
 
 
@@ -52,7 +62,7 @@
 				<div id="writeForm">
 					<form action="./write" method="get">
 						<!-- 제목 -->
-					  <input type="hidden" name="userNo" value="${user.no}">
+						<input type="hidden" name="userNo" value="${user.no}">
 						<div class="form-group">
 							<label class="form-text" for="txt-title">제목</label> <input
 								type="text" id="txt-title" name="title" value=""

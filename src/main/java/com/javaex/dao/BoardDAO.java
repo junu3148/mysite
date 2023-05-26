@@ -65,7 +65,7 @@ public class BoardDAO {
 	// ----------------- updateBoard -----------------------------
 	public int updateBoard(BoardVO vo) {
 		System.out.println("DAO updateBoard()");
-
+				
 		return sqlSession.update("board.updateBoard", vo);
 
 	}

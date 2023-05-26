@@ -72,7 +72,7 @@
 
 						<!-- 내용 -->
 						<div id="txt-content">
-							<span class="form-value">${board.content} </span>
+							<pre class="form-value">${board.content} </pre>
 						</div>
 						<c:if test="${user.no == board.userNo }">
 							<a id="btn_modify" href="./modifyForm?no=${board.no}&userNo=${board.userNo}">수정</a>

@@ -32,11 +32,7 @@ public class BoardVO {
 		this.content = content;
 		this.userNo = userNo;
 	}
-	@Override
-	public String toString() {
-		return "BoardVO [no=" + no + ", title=" + title + ", name=" + name + ", hit=" + hit + ", regDate=" + regDate
-				+ ", content=" + content + ", userNo=" + userNo + "]";
-	}
+
 	public int getNo() {
 		return no;
 	}
@@ -80,6 +76,10 @@ public class BoardVO {
 		this.userNo = userNo;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "BoardVO [no=" + no + ", title=" + title + ", name=" + name + ", hit=" + hit + ", regDate=" + regDate
+				+ ", content=" + content + ", userNo=" + userNo + "]";
+	}
 	
 }

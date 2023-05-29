@@ -17,7 +17,6 @@ public class UserDAO {
 	public int insertUser(UserVO vo) {
 		System.out.println("DAO insertUser");
 		
-		
 		return sqlSession.insert("user.insertUser", vo);
 	}
 	

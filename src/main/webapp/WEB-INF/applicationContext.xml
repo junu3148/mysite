@@ -34,7 +34,7 @@
 		<property name="URL"
 			value="jdbc:oracle:thin:@localhost:1521:xe" />
 		<property name="user" value="c##webdb" />
-		<property name="password" value="webdb" />
+		<property name="password" value="oracle" />
 		<property name="connectionCachingEnabled" value="true" />
 		<qualifier value="main-db" />
 	</bean>

@@ -3,7 +3,6 @@ package com.javaex.controller;
 
 import java.util.List;
 
-import javax.servlet.annotation.HttpConstraint;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.javaex.service.BoardService;
 import com.javaex.vo.BoardVO;
-import com.javaex.vo.UserVO;
 
 @Controller
 @RequestMapping("/board")
@@ -98,7 +96,7 @@ public class BoardController {
 		String uri = "/board/read";
 		boardVO = boardService.modifyBoard(vo);
 
-		if (vo.getUserNo() == boardVO.getUserNo()) {
+		if (vo.getUserNo() ==  boardVO.getUserNo()) {
 			model.addAttribute("board", boardVO);
 			uri = "/board/modifyForm";
 		}

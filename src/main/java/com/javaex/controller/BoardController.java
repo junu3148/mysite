@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.javaex.service.BoardService;
 import com.javaex.vo.BoardVO;
+import com.javaex.vo.Criteria;
 
 @Controller
 @RequestMapping("/board")
@@ -23,13 +24,18 @@ public class BoardController {
 	private BoardService boardService;
 	@Autowired
 	private BoardVO boardVO;
+	
+	
 
 	// ------------------- list --------------------
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
-	public String list(Model model) {
+	public String list(Model model,@ModelAttribute Criteria vo) {
 		System.out.println("list");
+		Criteria cri = new Criteria();
+		cri.setPageNum(vo.getPageNum());
+		cri.setAmount(vo.getAmount());
 
-		List<BoardVO> boardList = boardService.getBoardList();
+		List<BoardVO> boardList = boardService.getBoardList(cri);
 		model.addAttribute("boardList", boardList);
  
 		return "/board/list";

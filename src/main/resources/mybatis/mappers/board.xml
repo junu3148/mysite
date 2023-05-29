@@ -17,18 +17,35 @@
 	</insert>
 
 	<!-- getBoardList -->
-	<select id="getBoardList" resultType="BoardVO">
+	<select id="getBoardList" parameterType="com.javaex.vo.Criteria" resultType="BoardVO">
 
 	<![CDATA[
-		select  a.no,
-		        b.name,
-		        a.title,  
-		        a.content,   
-		        a.hit,   
-		        a.reg_date regDate,   
-		        a.user_no userNo
-		from board a join users b 
-		on a.user_no = b.no
+		select a.no no,
+		       b.name name,
+		       a.title title,
+		       a.content content,
+		       a.hit hit,
+		       a.regDate regDate,
+		       a.userNo userNo
+		from (select x.no,
+		             x.title,
+		             x.content,
+		             x.hit,
+		             x.regDate,
+		             x.userNo,
+		             rownum as rn
+		      from (select board.no,
+		                   board.title,
+		                   board.content,
+		                   board.hit,
+		                   board.reg_date as regDate,
+		                   board.user_no as userNo
+		            from board
+		            order by board.no desc) x
+		      where rownum <= #{pageNum} * #{amount}) a
+		join users b on a.userNo = b.no
+		where a.rn > (#{pageNum}-1) * #{amount}
+		order by a.no desc
 	]]>
 
 	</select>

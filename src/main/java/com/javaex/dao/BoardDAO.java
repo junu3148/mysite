@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.BoardVO;
+import com.javaex.vo.Criteria;
 
 @Repository
 public class BoardDAO {
@@ -25,10 +26,10 @@ public class BoardDAO {
 	}
 
 	// ----------------- getBoardList -----------------------------
-	public List<BoardVO> getBoardList() {
+	public List<BoardVO> getBoardList(Criteria cri) {
 		System.out.println("DAO getBoardList()");
 
-		List<BoardVO> boardList = sqlSession.selectList("board.getBoardList");
+		List<BoardVO> boardList = sqlSession.selectList("board.getBoardList",cri);
 
 		return boardList;
 

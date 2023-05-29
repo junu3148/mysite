@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.javaex.dao.BoardDAO;
 import com.javaex.vo.BoardVO;
+import com.javaex.vo.Criteria;
 
 @Service
 public class BoardService {
@@ -25,10 +26,10 @@ public class BoardService {
 	}
 
 	// ----------------- getBoardList -----------------------------
-	public List<BoardVO> getBoardList() {
+	public List<BoardVO> getBoardList(Criteria cri) {
 		System.out.println("Service getBoardList()");
 
-		List<BoardVO> boardList = boardDAO.getBoardList();
+		List<BoardVO> boardList = boardDAO.getBoardList(cri);
 
 		return boardList;
 

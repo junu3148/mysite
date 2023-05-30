@@ -71,7 +71,19 @@
 				<div id="list">
 					<form action="./list" method="get">
 						<div class="form-group text-right">
-							<input type="text" name="keyword"
+							<select name="type">
+								<option value=""
+									<c:out value="${pageMaker.cri.type == null?'selected':'' }"/>>--</option>
+								<option value="T"
+									<c:out value="${pageMaker.cri.type eq 'T'?'selected':'' }"/>>제목</option>
+								<option value="C"
+									<c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>내용</option>
+								<option value="W"
+									<c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>작성자</option>
+								<option value="TC"
+									<c:out value="${pageMaker.cri.type eq 'TC'?'selected':'' }"/>>제목
+									+ 내용</option>
+							</select> <input type="text" name="keyword"
 								value="${pageMaker.cri.keyword}">
 							<button type="submit" id=btn_search>검색</button>
 						</div>
@@ -109,7 +121,7 @@
 							<!-- 이전페이지 버튼 -->
 							<c:if test="${pageMaker.prev}">
 								<li class="pageInfo_btn previous"><a
-									href="${pageMaker.startPage - 1}">◁</a></li>
+									href="${pageMaker.startPage - 1}">◀</a></li>
 							</c:if>
 
 							<!-- 각 번호 페이지 버튼 -->
@@ -122,7 +134,7 @@
 							<!-- 다음페이지 버튼 -->
 							<c:if test="${pageMaker.next}">
 								<li class="pageInfo_btn next"><a
-									href="${pageMaker.endPage + 1}">▷</a></li>
+									href="${pageMaker.endPage + 1}">▶</a></li>
 							</c:if>
 						</ul>
 
@@ -130,9 +142,10 @@
 					</div>
 
 					<form id="moveForm" action="./list" method="get">
-						<input type="hidden" name="pageNum"	value="${pageMaker.cri.pageNum}"> 
-						<input type="hidden" name="amount" value="${pageMaker.cri.amount}"> 
-						<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+						<input type="hidden" name="pageNum"
+							value="${pageMaker.cri.pageNum}"> <input type="hidden"
+							name="amount" value="${pageMaker.cri.amount}"> <input
+							type="hidden" name="type" value="${pageMaker.cri.keyword}">
 					</form>
 					<c:choose>
 						<c:when test="${empty user.id}">

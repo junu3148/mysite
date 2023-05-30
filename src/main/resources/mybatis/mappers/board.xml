@@ -16,35 +16,64 @@
 
 	</insert>
 
+
+	<!-- 검색 조건문 -->
+	<sql id="criteria">
+		<trim prefix=" (" suffix=") " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'W'.toString()">
+							c.name like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+
+	</sql>
+
 	<!-- getBoardList -->
 	<select id="getBoardList" parameterType="Criteria"
 		resultType="BoardVO">
 
 	<![CDATA[
-		select a.no no,
-		       b.name name,
-		       a.title title,
-		       a.content content,
-		       a.hit hit,
-		       a.regDate regDate,
-		       a.userNo userNo
-		from (select x.no,
-		             x.title,
-		             x.content,
-		             x.hit,
-		             x.regDate,
-		             x.userNo,
-		             rownum as rn
-		      from (select board.no,
-		                   board.title,
-		                   board.content,
-		                   board.hit,
-		                   board.reg_date as regDate,
-		                   board.user_no as userNo
-		            from board
+		SELECT a.no AS no,
+		       b.name AS name,
+		       a.title AS title,
+		       a.content AS content,
+		       a.hit AS hit,
+		       a.regDate AS regDate,
+		       a.userNo AS userNo
+			FROM (
+				  SELECT x.no,
+				         x.title,
+				         x.content,
+				         x.hit,
+				         x.regDate,
+				         x.userNo,
+				         rownum AS rn
+			  FROM (
+				    SELECT board.no,
+				           board.title,
+				           board.content,
+				           board.hit,
+				           board.reg_date AS regDate,
+				           board.user_no AS userNo
+				    FROM board	    
+   					JOIN users c ON board.user_no = c.no
+		            
 	]]>
 		<if test="keyword != null">
-			WHERE board.title LIKE '%'||#{keyword}||'%'
+
+			where
+			<include refid="criteria"></include>
 		</if>           
 	<![CDATA[            
 		            order by board.no desc) x
@@ -103,19 +132,22 @@
 	</update>
 
 	<!-- getTotal -->
-	<select id="getTotal"  parameterType="Criteria" resultType="int">
+	<select id="getTotal" parameterType="Criteria" resultType="int">
 
-		select count(*) from board
-
+	 <![CDATA[
+		  SELECT COUNT(*) FROM board
+		  JOIN users c ON board.user_no = c.no
+	 ]]>
 		<if test="keyword != null">
-			WHERE board.title LIKE '%'||#{keyword}||'%'
+			WHERE
+			<include refid="criteria"></include>
 		</if>
 
 	</select>
 
 	<!-- serchBoardList -->
-	<select id="serchBoardList"
-		parameterType="Criteria" resultType="BoardVO">
+	<select id="serchBoardList" parameterType="Criteria"
+		resultType="BoardVO">
 
 	<![CDATA[
 		select a.no no,
@@ -151,8 +183,8 @@
 	</select>
 
 	<!-- serchBoardCount -->
-	<select id="serchBoardCount"
-		parameterType="Criteria" resultType="java.lang.Integer">
+	<select id="serchBoardCount" parameterType="Criteria"
+		resultType="java.lang.Integer">
   <![CDATA[
 	    SELECT COUNT(*) AS count
 	    FROM board

@@ -17,7 +17,8 @@
 	</insert>
 
 	<!-- getBoardList -->
-	<select id="getBoardList" parameterType="com.javaex.vo.Criteria" resultType="BoardVO">
+	<select id="getBoardList" parameterType="Criteria"
+		resultType="BoardVO">
 
 	<![CDATA[
 		select a.no no,
@@ -41,38 +42,22 @@
 		                   board.reg_date as regDate,
 		                   board.user_no as userNo
 		            from board
+	]]>
+		<if test="keyword != null">
+			WHERE board.title LIKE '%'||#{keyword}||'%'
+		</if>           
+	<![CDATA[            
 		            order by board.no desc) x
 		      where rownum <= #{pageNum} * #{amount}) a
 		join users b on a.userNo = b.no
 		where a.rn > (#{pageNum}-1) * #{amount}
 		order by a.no desc
 	]]>
-
-	</select>
-
-	<!-- serchBoardList -->
-	<select id="serchBoardList" parameterType="String"
-		resultType="BoardVO">
-
-	<![CDATA[
-		SELECT a.no,
-		       b.name,
-		       a.title,
-		       a.content,
-		       a.hit,
-		       a.reg_date AS regDate,
-		       a.user_no AS userNo
-		FROM board a
-		JOIN users b ON a.user_no = b.no
-		WHERE title LIKE '%${value}%'
-	]]>
-
 	</select>
 
 	<!-- getBoard -->
 	<select id="getBoard" parameterType="String"
 		resultType="BoardVO">
-
 	<![CDATA[
 		SELECT a.no,
 		       b.name,
@@ -85,16 +70,14 @@
 		JOIN users b ON a.user_no = b.no
 		WHERE a.no = #{no}
 	]]>
-
 	</select>
 
 
+	<!-- deleteBoard -->
 	<delete id="deleteBoard" parameterType="BoardVO">
 	<![CDATA[
-	
 		delete from board
 				where no = #{no}
-	
 	]]>
 
 	</delete>
@@ -105,20 +88,77 @@
 	            title= #{title},
 	            content = #{content}
 				where no = #{no}
-	
 	]]>
 
 	</update>
-	
-		<update id="hitPlus" parameterType="BoardVO">
+
+	<!-- hitPlus -->
+	<update id="hitPlus" parameterType="BoardVO">
 	<![CDATA[
 		update board set  
 	            hit = hit+1
 				where no = #{no}
-	
 	]]>
 
 	</update>
+
+	<!-- getTotal -->
+	<select id="getTotal"  parameterType="Criteria" resultType="int">
+
+		select count(*) from board
+
+		<if test="keyword != null">
+			WHERE board.title LIKE '%'||#{keyword}||'%'
+		</if>
+
+	</select>
+
+	<!-- serchBoardList -->
+	<select id="serchBoardList"
+		parameterType="Criteria" resultType="BoardVO">
+
+	<![CDATA[
+		select a.no no,
+		       b.name name,
+		       a.title title,
+		       a.content content,
+		       a.hit hit,
+		       a.regDate regDate,
+		       a.userNo userNo
+		from (select x.no,
+		             x.title,
+		             x.content,
+		             x.hit,
+		             x.regDate,
+		             x.userNo,
+		             rownum as rn
+		      from (select board.no,
+		                   board.title,
+		                   board.content,
+		                   board.hit,
+		                   board.reg_date as regDate,
+		                   board.user_no as userNo
+		            from board
+		           WHERE board.title LIKE '%'||#{keyword}||'%'
+		            order by board.no desc) x
+		      where rownum <= #{pageNum} * #{amount}) a
+		join users b on a.userNo = b.no
+		where a.rn > (#{pageNum}-1) * #{amount}
+		order by a.no desc
+		
+	]]>
+
+	</select>
+
+	<!-- serchBoardCount -->
+	<select id="serchBoardCount"
+		parameterType="Criteria" resultType="java.lang.Integer">
+  <![CDATA[
+	    SELECT COUNT(*) AS count
+	    FROM board
+	    WHERE title LIKE '%'||#{keyword}||'%'
+  ]]>
+	</select>
 
 
 

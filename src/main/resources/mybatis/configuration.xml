@@ -6,6 +6,7 @@
    <typeAlias alias="UserVO" type="com.javaex.vo.UserVO" />
    <typeAlias alias="GuestBookVO" type="com.javaex.vo.GuestBookVO" />
    <typeAlias alias="BoardVO" type="com.javaex.vo.BoardVO" />
+   <typeAlias alias="Criteria" type="com.javaex.vo.Criteria" />
    
     
     </typeAliases>

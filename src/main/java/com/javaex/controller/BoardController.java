@@ -1,8 +1,6 @@
 
 package com.javaex.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.javaex.service.BoardService;
 import com.javaex.vo.BoardVO;
 import com.javaex.vo.Criteria;
+import com.javaex.vo.PageMakerDTO;
 
 @Controller
 @RequestMapping("/board")
@@ -24,20 +23,22 @@ public class BoardController {
 	private BoardService boardService;
 	@Autowired
 	private BoardVO boardVO;
-	
-	
 
 	// ------------------- list --------------------
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
-	public String list(Model model,@ModelAttribute Criteria vo) {
+	public String list(Model model, @ModelAttribute Criteria cri) {
 		System.out.println("list");
-		Criteria cri = new Criteria();
-		cri.setPageNum(vo.getPageNum());
-		cri.setAmount(vo.getAmount());
 
-		List<BoardVO> boardList = boardService.getBoardList(cri);
-		model.addAttribute("boardList", boardList);
- 
+		model.addAttribute("boardList", boardService.getBoardList(cri));
+		
+		int total = boardService.getTotal(cri);
+	
+		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
+		
+
+		model.addAttribute("pageMaker", pageMaker);
+		
+
 		return "/board/list";
 	}
 
@@ -71,13 +72,14 @@ public class BoardController {
 
 	// ------------------- serchBoard --------------------
 	@RequestMapping(value = "/serchBoard", method = { RequestMethod.GET, RequestMethod.POST })
-	public String serchBoard(@ModelAttribute BoardVO vo, Model model) {
+	public String serchBoard(@ModelAttribute Criteria cri, Model model) {
 		System.out.println("list");
-		String title = vo.getTitle();
-
-		List<BoardVO> boardList = boardService.serchBoardList(title);
-		model.addAttribute("boardList", boardList);
-
+		
+		
+		model.addAttribute("boardList", boardService.getBoardList(cri));
+				
+		model.addAttribute("pageMaker", new PageMakerDTO(cri, boardService.getTotal(cri)));
+		
 		return "/board/list";
 	}
 
@@ -85,7 +87,7 @@ public class BoardController {
 	@RequestMapping(value = "/readForm", method = { RequestMethod.GET, RequestMethod.POST })
 	public String readForm(@ModelAttribute BoardVO vo, Model model) {
 		System.out.println("readForm");
-		System.out.println(vo);
+	
 
 		boardVO = boardService.modifyBoard(vo);
 
@@ -102,7 +104,7 @@ public class BoardController {
 		String uri = "/board/read";
 		boardVO = boardService.modifyBoard(vo);
 
-		if (vo.getUserNo() ==  boardVO.getUserNo()) {
+		if (vo.getUserNo() == boardVO.getUserNo()) {
 			model.addAttribute("board", boardVO);
 			uri = "/board/modifyForm";
 		}
@@ -118,7 +120,5 @@ public class BoardController {
 
 		return "redirect:/board/list";
 	}
-	
-
 
 }

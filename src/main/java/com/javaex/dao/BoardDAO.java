@@ -46,13 +46,20 @@ public class BoardDAO {
 	}
 
 	// ----------------- serchBoardList -----------------------------
-	public List<BoardVO> serchBoardList(String title) {
+	public List<BoardVO> serchBoardList(Criteria cri) {
 		System.out.println("DAO serchBoardList()");
-
-		List<BoardVO> boardList = sqlSession.selectList("board.serchBoardList", title);
-
+		
+		List<BoardVO> boardList = sqlSession.selectList("board.serchBoardList", cri);
+		
 		return boardList;
-
+		
+	}
+	// ----------------- serchBoardCount -----------------------------
+	public int serchBoardCount(Criteria cri) {
+		System.out.println("DAO serchBoardCount()");
+		 		
+		return sqlSession.selectOne("board.serchBoardCount", cri);
+		
 	}
 
 	// ----------------- deleteBoard -----------------------------
@@ -77,6 +84,14 @@ public class BoardDAO {
 
 		return sqlSession.update("board.hitPlus", vo);
 
+	}
+	
+	// ----------------- getTotal -----------------------------
+	public int getTotal(Criteria cri) {
+		System.out.println("DAO getTotal()");
+		
+		return sqlSession.selectOne("board.getTotal",cri);
+		
 	}
 
 }

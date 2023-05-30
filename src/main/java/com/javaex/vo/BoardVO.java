@@ -16,6 +16,7 @@ public class BoardVO {
 	private Date regDate;
 	private String content;
 	private int userNo;
+	private int cnt;
 	
 	
 	
@@ -33,6 +34,12 @@ public class BoardVO {
 		this.userNo = userNo;
 	}
 
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	public int getNo() {
 		return no;
 	}

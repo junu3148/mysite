@@ -28,14 +28,12 @@ public class BoardController {
 		System.out.println("list");
 
 		model.addAttribute("boardList", boardService.getBoardList(cri));
-		
+
 		int total = boardService.getTotal(cri);
-	
+
 		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
-		
 
 		model.addAttribute("pageMaker", pageMaker);
-		
 
 		return "/board/list";
 	}
@@ -68,16 +66,15 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 
-	// ------------------- serchBoard --------------------
+	// ------------------- serchBoard -------------------- //사용안함
 	@RequestMapping(value = "/serchBoard", method = { RequestMethod.GET, RequestMethod.POST })
 	public String serchBoard(@ModelAttribute Criteria cri, Model model) {
 		System.out.println("list");
-		
-		
+
 		model.addAttribute("boardList", boardService.getBoardList(cri));
-				
+
 		model.addAttribute("pageMaker", new PageMakerDTO(cri, boardService.getTotal(cri)));
-		
+
 		return "/board/list";
 	}
 
@@ -85,7 +82,6 @@ public class BoardController {
 	@RequestMapping(value = "/readForm", method = { RequestMethod.GET, RequestMethod.POST })
 	public String readForm(@ModelAttribute BoardVO vo, Model model) {
 		System.out.println("readForm");
-	
 
 		boardVO = boardService.modifyBoard(vo);
 
@@ -100,6 +96,7 @@ public class BoardController {
 		System.out.println("modifyForm");
 
 		String uri = "/board/read";
+		
 		boardVO = boardService.modifyBoard(vo);
 
 		if (vo.getUserNo() == boardVO.getUserNo()) {

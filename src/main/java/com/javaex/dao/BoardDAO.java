@@ -45,7 +45,7 @@ public class BoardDAO {
 
 	}
 
-	// ----------------- serchBoardList -----------------------------
+	// ----------------- serchBoardList ---------------------//사용안함
 	public List<BoardVO> serchBoardList(Criteria cri) {
 		System.out.println("DAO serchBoardList()");
 		
@@ -54,7 +54,7 @@ public class BoardDAO {
 		return boardList;
 		
 	}
-	// ----------------- serchBoardCount -----------------------------
+	// ----------------- serchBoardCount --------------------//사용안함
 	public int serchBoardCount(Criteria cri) {
 		System.out.println("DAO serchBoardCount()");
 		 		

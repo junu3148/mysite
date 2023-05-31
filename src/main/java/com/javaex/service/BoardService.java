@@ -1,12 +1,8 @@
 package com.javaex.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.javaex.dao.BoardDAO;
 import com.javaex.vo.BoardVO;
 import com.javaex.vo.Criteria;
@@ -32,12 +28,13 @@ public class BoardService {
 		System.out.println("Service getBoardList()");
 
 		List<BoardVO> boardList = boardDAO.getBoardList(cri);
+		
 
 		return boardList;
 
 	}
 
-	// ----------------- serchBoardList -----------------------------
+	// ----------------- serchBoardList --------------------//사용안함
 	public List<BoardVO> serchBoardList(Criteria cri) {
 		System.out.println("Service serchBoardList()");
 
@@ -46,7 +43,7 @@ public class BoardService {
 		return boardList;
 
 	}
-	// ----------------- serchBoardCount -----------------------------
+	// ----------------- serchBoardCount -------------------//사용안함
 	public int serchBoardCount(Criteria cri) {
 		System.out.println("Service serchBoardCount()");
 	
@@ -59,6 +56,7 @@ public class BoardService {
 		System.out.println("Service modifyBoard()");
 
 		boardVO = boardDAO.getBoard(vo);
+		
 		boardDAO.hitPlus(vo);
 
 		return boardVO;

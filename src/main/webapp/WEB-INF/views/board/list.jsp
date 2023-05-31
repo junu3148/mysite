@@ -145,7 +145,8 @@
 						<input type="hidden" name="pageNum"
 							value="${pageMaker.cri.pageNum}"> <input type="hidden"
 							name="amount" value="${pageMaker.cri.amount}"> <input
-							type="hidden" name="type" value="${pageMaker.cri.keyword}">
+							type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+						<input type="hidden" name="type" value="${pageMaker.cri.type}">
 					</form>
 					<c:choose>
 						<c:when test="${empty user.id}">

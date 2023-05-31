@@ -29,6 +29,16 @@
 .active {
 	background: Lightgray;
 }
+
+#btn_write2 {
+	border: 1px solid #A6A6A6;
+	border-radius: 2px;
+	background-color: #E5E5E5;
+	padding: 5px 10px 5px 10px;
+	font-size: 14px;
+	float: right;
+	margin-left: 10px;
+}
 </style>
 
 </head>
@@ -46,8 +56,8 @@
 		<div id="aside">
 			<h2>게시판</h2>
 			<ul>
-			<li><a href="${pageContext.request.contextPath}/board/list">일반게시판</a></li>
-				<li><a href="${pageContext.request.contextPath}/rboard/list">댓글게시판</a></li>
+				<li><a href="">일반게시판</a></li>
+				<li><a href="">댓글게시판</a></li>
 			</ul>
 		</div>
 		<!-- //aside -->
@@ -100,7 +110,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="board" items="${boardList}">
+							<c:forEach var="board" items="${rboardList}">
 								<tr>
 									<td>${board.no}</td>
 									<td class="text-left"><a
@@ -150,10 +160,12 @@
 					</form>
 					<c:choose>
 						<c:when test="${empty user.id}">
-							<a id="btn_write" href="/mysite/user/loginForm">글쓰기</a>
+							<a id="btn_write2" href="./loginForm">댓글쓰기</a>
+							<a id="btn_write" href="./loginForm">글쓰기</a>
 						</c:when>
 						<c:otherwise>
-							<a id="btn_write" href="./writeForm">글쓰기</a>
+							<a id="btn_write2" href="./rwriteForm/2">댓글쓰기</a>
+							<a id="btn_write" href="./rwriteForm/1">글쓰기</a>
 						</c:otherwise>
 					</c:choose>
 				</div>

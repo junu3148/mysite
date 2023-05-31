@@ -6,6 +6,7 @@
    <typeAlias alias="UserVO" type="com.javaex.vo.UserVO" />
    <typeAlias alias="GuestBookVO" type="com.javaex.vo.GuestBookVO" />
    <typeAlias alias="BoardVO" type="com.javaex.vo.BoardVO" />
+   <typeAlias alias="RboardVO" type="com.javaex.vo.RboardVO" />
    <typeAlias alias="Criteria" type="com.javaex.vo.Criteria" />
    
     
@@ -15,5 +16,6 @@
         <mapper resource="mybatis/mappers/guestbook.xml" />
         <mapper resource="mybatis/mappers/user.xml" />
         <mapper resource="mybatis/mappers/board.xml" />
+        <mapper resource="mybatis/mappers/rboard.xml" />
     </mappers>
 </configuration>

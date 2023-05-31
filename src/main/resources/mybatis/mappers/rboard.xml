@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rboard">
+
+
+	<!-- getBoardList -->
+	<select id="getRboardList" resultType="RboardVO">
+
+	<![CDATA[
+			SELECT a.no AS no,
+			       a.user_no AS userNo,
+			       a.title AS title,
+			       b.name AS name,
+			       a.content AS content,
+			       a.hit AS hit,
+			       a.reg_date AS regDate,
+			       a.group_no as proupNo,
+			       a.order_no as orderNo,
+			       a.depth as depth	
+    		from rboard a join users b on a.user_no = b.no
+    		order by a.no desc	       
+	
+	]]>
+	</select>
+	<!-- insertRboard -->
+	<insert id="insertRboard" parameterType="RboardVO">
+	<![CDATA[
+			insert into rboard 
+							  (
+							   no, 
+							   user_no, 
+							   title, 
+							   content, 
+							   group_no, 
+							   order_no, 
+							   depth
+							   )
+						values
+							  (
+							   seq_rboard_no.nextval , 
+							   #{userNo},
+							   #{title}, 
+							   #{content},
+							   seq_rboard_no.nextval ,
+							   1,
+							   0 
+							   )
+		
+	]]>
+	</insert>
+
+	<!-- deleteRboard -->
+	<delete id="deleteRboard" parameterType="RboardVO">
+		<![CDATA[
+			delete from rboard 	where no = #{no}
+		]]>
+	</delete>
+
+	<!-- getRboard -->
+	<select id="getRboard" resultType="RboardVO">
+		<![CDATA[
+			SELECT a.no,
+	               a.user_no as userNo,
+			       a.title,
+	               b.name,
+			       a.content,
+			       a.hit,
+			       a.reg_date as regDate,
+	               a.group_no as groupNo,
+	               a.order_no as orderNo,
+	               a.depth as depth	       
+			FROM rboard a
+			JOIN users b ON a.user_no = b.no
+			WHERE a.no = #{no}
+		]]>
+	</select>
+
+	<!-- updateRboard -->
+	<update id="updateRboard" parameterType="RboardVO">
+	<![CDATA[
+		update rboard set  
+	            title= #{title},
+	            content = #{content}
+				where no = #{no}
+	]]>
+	</update>
+	
+	<!-- hitPlus -->
+	<update id="hitPlus" parameterType="RboardVO">
+	<![CDATA[
+	
+		update rboard set  
+	            hit = hit+1
+				where no = #{no}
+	]]>
+
+	</update>
+
+</mapper>

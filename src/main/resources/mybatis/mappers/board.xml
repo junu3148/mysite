@@ -70,10 +70,11 @@
    					JOIN users c ON board.user_no = c.no
 		            
 	]]>
-		<if test="keyword != null">
+		<if test="keyword != null and type !=null">
 
-			where
-			<include refid="criteria"></include>
+			<where>
+				<include refid="criteria"></include>
+			</where>
 		</if>           
 	<![CDATA[            
 		            order by board.no desc) x
@@ -138,9 +139,10 @@
 		  SELECT COUNT(*) FROM board
 		  JOIN users c ON board.user_no = c.no
 	 ]]>
-		<if test="keyword != null">
-			WHERE
-			<include refid="criteria"></include>
+		<if test="keyword != null and type !=null">
+			<where>
+				<include refid="criteria"></include>
+			</where>
 		</if>
 
 	</select>

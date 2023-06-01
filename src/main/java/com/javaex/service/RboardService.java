@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaex.dao.RboardDAO;
+import com.javaex.vo.Criteria;
 import com.javaex.vo.RboardVO;
 
 @Service
@@ -17,14 +18,22 @@ public class RboardService {
 	private RboardVO rboardVO;
 
 	// ----------------- getRboardList -----------------------------
-	public List<RboardVO> getRboardList() {
+	public List<RboardVO> getRboardList(Criteria cri) {
 		System.out.println("Service getBoardList()");
 
-		List<RboardVO> boardList = rboardDAO.getRboardList();
+		List<RboardVO> boardList = rboardDAO.getRboardList(cri);
 
 		return boardList;
 
 	}
+	
+	// ----------------- getTotal -----------------------------
+		public int getTotal(Criteria cri) {
+			System.out.println("Service getTotal()");
+
+			return rboardDAO.getTotal(cri);
+
+		}
 
 	// ----------------- insertRboard -----------------------------
 	public int insertRboard(RboardVO vo) {

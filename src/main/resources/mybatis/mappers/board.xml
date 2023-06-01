@@ -78,6 +78,7 @@
 		</if>           
 	<![CDATA[            
 		            order by board.no desc) x
+		            
 		      where rownum <= #{pageNum} * #{amount}) a
 		join users b on a.userNo = b.no
 		where a.rn > (#{pageNum}-1) * #{amount}

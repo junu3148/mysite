@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.javaex.service.RboardService;
+import com.javaex.vo.Criteria;
+import com.javaex.vo.PageMakerDTO;
 import com.javaex.vo.RboardVO;
 
 @Controller
@@ -23,10 +25,16 @@ public class RboardController {
 
 	// ------------------- list --------------------
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
-	public String list(Model model) {
+	public String list(Model model, @ModelAttribute Criteria cri) {
 		System.out.println("list");
 
-		model.addAttribute("rboardList", rboardService.getRboardList());
+		model.addAttribute("rboardList", rboardService.getRboardList(cri));
+		
+		int total = rboardService.getTotal(cri);
+
+		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
+
+		model.addAttribute("pageMaker", pageMaker);
 
 		return "/rboard/list";
 	}

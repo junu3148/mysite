@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.BoardVO;
+import com.javaex.vo.Criteria;
 import com.javaex.vo.RboardVO;
 
 @Repository
@@ -18,15 +19,22 @@ public class RboardDAO {
 	private RboardVO rboardVO;
 
 	// ----------------- getRboardList -----------------------------
-	public List<RboardVO> getRboardList() {
+	public List<RboardVO> getRboardList(Criteria cri) {
 		System.out.println("DAO getRboardList()");
 
-		List<RboardVO> rboardList = sqlSession.selectList("rboard.getRboardList");
+		List<RboardVO> rboardList = sqlSession.selectList("rboard.getRboardList",cri);
 
 		return rboardList;
 
 	}
 
+	// ----------------- getTotal -----------------------------
+		public int getTotal(Criteria cri) {
+			System.out.println("DAO getTotal()");
+			
+			return sqlSession.selectOne("rboard.getTotal",cri);
+			
+		}
 	// ----------------- insertRboard -----------------------------
 	public int insertRboard(RboardVO vo) {
 		System.out.println("DAO  insertRboard()");

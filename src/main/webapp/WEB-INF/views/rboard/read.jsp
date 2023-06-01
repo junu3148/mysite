@@ -36,9 +36,8 @@
 
 		<div id="aside">
 			<h2>게시판</h2>
-			<ul>
-				<li><a href="">일반게시판</a></li>
-				<li><a href="">댓글게시판</a></li>
+			<ul><li><a href="${pageContext.request.contextPath}/board/list">일반게시판</a></li>
+				<li><a href="${pageContext.request.contextPath}/rboard/list">댓글게시판</a></li>
 			</ul>
 		</div>
 		<!-- //aside -->
@@ -90,8 +89,10 @@
 							<a id="btn_modify"
 								href="./modifyForm?no=${rboard.no}&userNo=${rboard.userNo}">수정</a>
 						</c:if>
-						<a id="btn_modify" href="./list">목록</a> 
+						<a id="btn_modify" href="./list">목록</a>
+						<c:choose><c:when test="${rboard.depth < 2}">
 						<a id="btn_write2" href="./rwriteForm/2?no=${rboard.no}">댓글쓰기</a>
+						</c:when></c:choose> 
 					</form>
 					<!-- //form -->
 				</div>

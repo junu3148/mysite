@@ -3,29 +3,104 @@
 
 <mapper namespace="rboard">
 
+	<!-- 검색 조건문 -->
+	<sql id="criteria">
+		<trim prefix=" (" suffix=") " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'W'.toString()">
+							c.name like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+
+	</sql>
+
 
 	<!-- getBoardList -->
-	<select id="getRboardList" resultType="RboardVO">
+	<select id="getRboardList" parameterType="Criteria"
+		resultType="RboardVO">
 
 	<![CDATA[
-			    SELECT a.no AS no,
-				       a.user_no AS userNo,
-				       a.title AS title,			 
-				       b.name AS name,
-				       a.content AS content,
-				       a.hit AS hit,
-				       a.reg_date AS regDate,
-				       a.group_no AS groupNo,
-				       a.order_no AS orderNo,
-				       a.depth AS depth
-				FROM rboard a 
-				JOIN users b ON a.user_no = b.no
-				START WITH a.order_no = 1 
-				CONNECT BY NOCYCLE PRIOR a.no = a.group_no
-				ORDER BY a.group_no DESC, a.order_no, a.no DESC     
+			SELECT a.no AS no,
+                       a.userNo AS userNo,
+                       a.title AS title,
+                       b.name AS name,
+                       a.content AS content,
+                       a.hit AS hit,
+                       a.regDate AS regDate,
+                       a.groupNo AS groupNo,
+                       a.orderNo AS orderNo,
+                       a.depth AS depth
+                FROM (                             
+                      SELECT x.no,
+                             x.userNo,
+                             x.title,
+                             x.content,
+                             x.hit,
+                             x.regDate,
+                             x.groupNo,
+                             x.orderNo,
+                             x.depth,
+                             rownum AS rn
+                        from(
+	                        SELECT rboard.no,
+	                               rboard.user_no AS userNo,
+	                               rboard.title,
+	                               rboard.content,
+	                               rboard.hit,
+	                               rboard.reg_date AS regDate,
+	                               rboard.group_no as groupNo,
+	                               rboard.order_no as orderNo,
+	                               rboard.depth
+	                        FROM rboard	    
+	                        JOIN users c ON rboard.user_no = c.no
+	]]>
+				<if test="keyword != null and type !=null">
+		
+					<where>
+						<include refid="criteria"></include>
+					</where>
+				</if> 
+                        
+	<![CDATA[
+	 						START WITH rboard.order_no = 1 
+                       	 	CONNECT BY NOCYCLE PRIOR rboard.no = rboard.group_no
+                        	ORDER BY rboard.group_no DESC, rboard.order_no, rboard.no DESC)x
+	                        where rownum <= #{pageNum} * #{amount}) a
+	                        join users b on a.userNo = b.no
+	                        where a.rn > (#{pageNum}-1) * #{amount}
+	                        START WITH a.orderNo = 1 
+                       		CONNECT BY NOCYCLE PRIOR a.no = a.groupNo
+                        	ORDER BY a.groupNo DESC, a.orderNo, a.no DESC
 	
 	]]>
 	</select>
+
+	<!-- getTotal -->
+	<select id="getTotal" parameterType="Criteria" resultType="int">
+
+	 <![CDATA[
+		  SELECT COUNT(*) FROM rboard
+		  JOIN users c ON rboard.user_no = c.no
+	 ]]>
+		<if test="keyword != null and type !=null">
+			<where>
+				<include refid="criteria"></include>
+			</where>
+		</if>
+
+	</select>
+
 	<!-- insertRboard -->
 	<insert id="insertRboard" parameterType="RboardVO">
 	<![CDATA[

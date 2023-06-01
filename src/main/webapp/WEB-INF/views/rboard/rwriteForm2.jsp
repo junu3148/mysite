@@ -63,6 +63,10 @@
 					<form action="../rwriteComm" method="get">
 						<!-- 제목 -->
 						<input type="hidden" name="userNo" value="${user.no}">
+						<input type="hidden" name="no" value="${rboard.no}">
+						<input type="hidden" name="groupNo" value="${rboard.groupNo}">
+						<input type="hidden" name="orderNo" value="${rboard.orderNo}">
+						<input type="hidden" name="depth" value="${rboard.depth}">
 						<div class="form-group">
 							<label class="form-text" for="txt-title">제목</label> <input
 								type="text" id="txt-title" name="title" value=""

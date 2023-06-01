@@ -10,6 +10,17 @@
 	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/board.css"
 	rel="stylesheet" type="text/css">
+<style>
+#btn_write2 {
+	border: 1px solid #A6A6A6;
+	border-radius: 2px;
+	background-color: #E5E5E5;
+	padding: 5px 10px 5px 10px;
+	font-size: 14px;
+	float: right;
+	margin-left: 10px;
+}
+</style>
 
 </head>
 
@@ -50,6 +61,7 @@
 			<div id="board">
 				<div id="read">
 					<form action="#" method="get">
+					
 						<!-- 작성자 -->
 						<div class="form-group">
 							<span class="form-text">작성자</span> <span class="form-value">${rboard.name}</span>
@@ -75,9 +87,11 @@
 							<pre class="form-value">${rboard.content} </pre>
 						</div>
 						<c:if test="${user.no == rboard.userNo }">
-							<a id="btn_modify" href="./modifyForm?no=${rboard.no}&userNo=${rboard.userNo}">수정</a>
+							<a id="btn_modify"
+								href="./modifyForm?no=${rboard.no}&userNo=${rboard.userNo}">수정</a>
 						</c:if>
-						<a id="btn_modify" href="./list">목록</a>
+						<a id="btn_modify" href="./list">목록</a> 
+						<a id="btn_write2" href="./rwriteForm/2?no=${rboard.no}">댓글쓰기</a>
 					</form>
 					<!-- //form -->
 				</div>

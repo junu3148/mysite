@@ -33,6 +33,13 @@ public class RboardService {
 		return rboardDAO.insertRboard(vo);
 
 	}
+	// ----------------- insertRboardComm -----------------------------
+	public int insertRboardComm(RboardVO vo) {
+		System.out.println("Service  insertRboardComm()");
+		
+		return rboardDAO.insertRboardComm(vo);
+		
+	}
 
 	// ----------------- deleteRboard -----------------------------
 	public int deleteRboard(RboardVO vo) {

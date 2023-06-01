@@ -30,15 +30,7 @@
 	background: Lightgray;
 }
 
-#btn_write2 {
-	border: 1px solid #A6A6A6;
-	border-radius: 2px;
-	background-color: #E5E5E5;
-	padding: 5px 10px 5px 10px;
-	font-size: 14px;
-	float: right;
-	margin-left: 10px;
-}
+
 </style>
 
 </head>
@@ -160,11 +152,11 @@
 					</form>
 					<c:choose>
 						<c:when test="${empty user.id}">
-							<a id="btn_write2" href="./loginForm">댓글쓰기</a>
+						
 							<a id="btn_write" href="./loginForm">글쓰기</a>
 						</c:when>
 						<c:otherwise>
-							<a id="btn_write2" href="./rwriteForm/2">댓글쓰기</a>
+							
 							<a id="btn_write" href="./rwriteForm/1">글쓰기</a>
 						</c:otherwise>
 					</c:choose>

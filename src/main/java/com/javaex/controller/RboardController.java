@@ -1,8 +1,6 @@
 
 package com.javaex.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.javaex.service.RboardService;
-import com.javaex.vo.BoardVO;
 import com.javaex.vo.RboardVO;
 
 @Controller
@@ -36,11 +33,12 @@ public class RboardController {
 
 	// ------------------- rwriteForm --------------------
 	@RequestMapping(value = "/rwriteForm/{no}", method = { RequestMethod.GET, RequestMethod.POST })
-	public String rwriteForm(@PathVariable("no") int no) {
+	public String rwriteForm(@PathVariable("no") int no,@ModelAttribute RboardVO vo,Model model) {
 		System.out.println("rwriteForm");
 
 		String uri = "/rboard/rwriteForm";
 		if (no == 2) {
+			model.addAttribute("rboard", rboardService.modifyRboard(vo));
 			uri = "/rboard/rwriteForm2";
 		}
 		return uri;
@@ -48,7 +46,7 @@ public class RboardController {
 
 	// ------------------- rwrite --------------------
 	@RequestMapping(value = "/rwrite", method = { RequestMethod.GET, RequestMethod.POST })
-	public String write(@ModelAttribute RboardVO vo, HttpSession session) {
+	public String write(@ModelAttribute RboardVO vo) {
 		System.out.println("rwrite");
 
 		rboardService.insertRboard(vo);
@@ -58,10 +56,10 @@ public class RboardController {
 
 	// ------------------- rwrite2 --------------------
 	@RequestMapping(value = "/rwriteComm", method = { RequestMethod.GET, RequestMethod.POST })
-	public String rwriteComm(@ModelAttribute RboardVO vo, HttpSession session) {
+	public String rwriteComm(@ModelAttribute RboardVO vo) {
 		System.out.println("rwriteComm");
 
-		// rboardService.insertRboardComm(vo);
+		rboardService.insertRboardComm(vo);
 
 		return "redirect:/rboard/list";
 	}

@@ -34,6 +34,14 @@ public class RboardDAO {
 		return sqlSession.insert("rboard.insertRboard", vo);
 
 	}
+	// ----------------- insertRboardComm -----------------------------
+	public int insertRboardComm(RboardVO vo) {
+		System.out.println("DAO  insertRboardComm()");
+		System.out.println(vo);
+		
+		return 0;
+		
+	}
 
 	// ----------------- deleteRboard -----------------------------
 	public int deleteRboard(RboardVO vo) {

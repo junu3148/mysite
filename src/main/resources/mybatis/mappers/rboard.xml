@@ -15,7 +15,7 @@
 			       a.content AS content,
 			       a.hit AS hit,
 			       a.reg_date AS regDate,
-			       a.group_no as proupNo,
+			       a.group_no as groupNo,
 			       a.order_no as orderNo,
 			       a.depth as depth	
     		from rboard a join users b on a.user_no = b.no

@@ -82,13 +82,16 @@
 
 	<!-- updateRboardComm -->
 	<update id="updateRboardComm" parameterType="RboardVO">
+
+		
+
 	<![CDATA[
 		 UPDATE rboard SET 
-		 				     order_no = order_no+1 
+		 				     order_no = order_no+1 		
 		 			  WHERE  group_no = #{groupNo} 
 		 			  AND    order_no > #{orderNo}
-
 	]]>
+
 	</update>
 
 	<!-- deleteRboard -->

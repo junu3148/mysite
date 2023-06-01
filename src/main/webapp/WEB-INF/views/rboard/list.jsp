@@ -29,8 +29,6 @@
 .active {
 	background: Lightgray;
 }
-
-
 </style>
 
 </head>
@@ -109,7 +107,9 @@
 								<tr>
 									<td>${board.no}</td>
 									<td class="text-left"><a
-										href="./readForm?no=${board.no}&userNo=${board.userNo}">${board.title}</a></td>
+										href="./readForm?no=${board.no}&userNo=${board.userNo}"> 
+										<c:forEach begin="0" end="${board.depth}">&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach>
+										<c:choose><c:when test="${board.orderNo > 1}">└&nbsp;</c:when></c:choose>${board.title}</a></td>
 									<td>${board.name}</td>
 									<td>${board.hit}</td>
 									<td>${board.regDate}</td>
@@ -158,11 +158,11 @@
 					</form>
 					<c:choose>
 						<c:when test="${empty user.id}">
-						
+
 							<a id="btn_write" href="./loginForm">글쓰기</a>
 						</c:when>
 						<c:otherwise>
-							
+
 							<a id="btn_write" href="./rwriteForm/1">글쓰기</a>
 						</c:otherwise>
 					</c:choose>

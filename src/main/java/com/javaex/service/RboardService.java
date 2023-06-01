@@ -36,6 +36,7 @@ public class RboardService {
 	// ----------------- insertRboardComm -----------------------------
 	public int insertRboardComm(RboardVO vo) {
 		System.out.println("Service  insertRboardComm()");
+		rboardDAO.updateRboardComm(vo);
 		
 		return rboardDAO.insertRboardComm(vo);
 		

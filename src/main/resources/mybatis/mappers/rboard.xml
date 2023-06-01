@@ -8,18 +8,21 @@
 	<select id="getRboardList" resultType="RboardVO">
 
 	<![CDATA[
-			SELECT a.no AS no,
-			       a.user_no AS userNo,
-			       a.title AS title,
-			       b.name AS name,
-			       a.content AS content,
-			       a.hit AS hit,
-			       a.reg_date AS regDate,
-			       a.group_no as groupNo,
-			       a.order_no as orderNo,
-			       a.depth as depth	
-    		from rboard a join users b on a.user_no = b.no
-    		order by a.no desc	       
+			    SELECT a.no AS no,
+				       a.user_no AS userNo,
+				       a.title AS title,			 
+				       b.name AS name,
+				       a.content AS content,
+				       a.hit AS hit,
+				       a.reg_date AS regDate,
+				       a.group_no AS groupNo,
+				       a.order_no AS orderNo,
+				       a.depth AS depth
+				FROM rboard a 
+				JOIN users b ON a.user_no = b.no
+				START WITH a.order_no = 1 
+				CONNECT BY NOCYCLE PRIOR a.no = a.group_no
+				ORDER BY a.group_no DESC, a.order_no, a.no DESC     
 	
 	]]>
 	</select>
@@ -49,6 +52,44 @@
 		
 	]]>
 	</insert>
+
+	<!-- insertRboardComm -->
+	<insert id="insertRboardComm" parameterType="RboardVO">
+	<![CDATA[
+		
+		insert into rboard 
+							 (
+							   no, 
+						       user_no, 
+							   title, 
+							   content, 
+							   group_no, 
+							   order_no, 
+							   depth
+							   )
+                    values  ( 
+		                     seq_rboard_no.nextval,
+		                     #{userNo},
+		                     #{title},
+		                     #{content},
+		                     #{groupNo},		
+		                     #{orderNo} +1,		
+							 #{depth} + 1
+		                     )
+	]]>
+
+	</insert>
+
+	<!-- updateRboardComm -->
+	<update id="updateRboardComm" parameterType="RboardVO">
+	<![CDATA[
+		 UPDATE rboard SET 
+		 				     order_no = order_no+1 
+		 			  WHERE  group_no = #{groupNo} 
+		 			  AND    order_no > #{orderNo}
+
+	]]>
+	</update>
 
 	<!-- deleteRboard -->
 	<delete id="deleteRboard" parameterType="RboardVO">
@@ -85,7 +126,7 @@
 				where no = #{no}
 	]]>
 	</update>
-	
+
 	<!-- hitPlus -->
 	<update id="hitPlus" parameterType="RboardVO">
 	<![CDATA[

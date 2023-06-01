@@ -98,6 +98,9 @@
 								<th>글쓴이</th>
 								<th>조회수</th>
 								<th>작성일</th>
+								<th>1</th>
+								<th>2</th>
+								<th>3</th>
 								<th>관리</th>
 							</tr>
 						</thead>
@@ -110,6 +113,9 @@
 									<td>${board.name}</td>
 									<td>${board.hit}</td>
 									<td>${board.regDate}</td>
+									<td>${board.groupNo}</td>
+									<td>${board.orderNo}</td>
+									<td>${board.depth}</td>
 									<c:if test="${board.userNo==user.no}">
 										<td><a href="./delete?no=${board.no}">[삭제]</a></td>
 									</c:if>

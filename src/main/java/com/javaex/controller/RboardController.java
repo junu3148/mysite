@@ -38,7 +38,7 @@ public class RboardController {
 
 		String uri = "/rboard/rwriteForm";
 		if (no == 2) {
-			model.addAttribute("rboard", rboardService.modifyRboard(vo));
+			model.addAttribute("rboard",rboardService.modifyRboard(vo));
 			uri = "/rboard/rwriteForm2";
 		}
 		return uri;

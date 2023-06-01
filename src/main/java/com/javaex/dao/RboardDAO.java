@@ -38,8 +38,8 @@ public class RboardDAO {
 	public int insertRboardComm(RboardVO vo) {
 		System.out.println("DAO  insertRboardComm()");
 		System.out.println(vo);
-		
-		return 0;
+				
+		return sqlSession.insert("rboard.insertRboardComm", vo);
 		
 	}
 
@@ -47,7 +47,7 @@ public class RboardDAO {
 	public int deleteRboard(RboardVO vo) {
 		System.out.println("DAO deleteRboard()");
 
-		return sqlSession.insert("rboard.deleteRboard", vo);
+		return sqlSession.delete("rboard.deleteRboard", vo);
 
 	}
 
@@ -65,8 +65,15 @@ public class RboardDAO {
 	public int updateRboard(RboardVO vo) {
 		System.out.println("DAO updateRboard()");
 
-		return sqlSession.insert("rboard.updateRboard", vo);
+		return sqlSession.update("rboard.updateRboard", vo);
 
+	}
+	// ----------------- updateRboard -----------------------------
+	public int updateRboardComm(RboardVO vo) {
+		System.out.println("DAO updateRboardComm()");
+		
+		return sqlSession.update("rboard.updateRboardComm", vo);
+		
 	}
 	
 	// ----------------- hitPlus -----------------------------

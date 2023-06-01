@@ -31,9 +31,9 @@ public class RboardController {
 		model.addAttribute("rboardList", rboardService.getRboardList(cri));
 		
 		int total = rboardService.getTotal(cri);
-
+		System.out.println(total);
 		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
-
+	
 		model.addAttribute("pageMaker", pageMaker);
 
 		return "/rboard/list";

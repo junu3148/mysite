@@ -73,15 +73,11 @@
 				</if> 
                         
 	<![CDATA[
-	 						START WITH rboard.order_no = 1 
-                       	 	CONNECT BY NOCYCLE PRIOR rboard.no = rboard.group_no
-                        	ORDER BY rboard.group_no DESC, rboard.order_no, rboard.no DESC)x
+	 						order by group_no DESC, order_no ASC)x
 	                        where rownum <= #{pageNum} * #{amount}) a
 	                        join users b on a.userNo = b.no
 	                        where a.rn > (#{pageNum}-1) * #{amount}
-	                        START WITH a.orderNo = 1 
-                       		CONNECT BY NOCYCLE PRIOR a.no = a.groupNo
-                        	ORDER BY a.groupNo DESC, a.orderNo, a.no DESC
+	                       
 	
 	]]>
 	</select>

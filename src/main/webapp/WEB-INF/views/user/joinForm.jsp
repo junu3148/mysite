@@ -131,13 +131,15 @@
 			url : "${pageContext.request.contextPath}/user/idCheck",
 			type : "post",
 			//contentType : "application/json",
-			data : { id : id },
+			data : {
+				id : id
+			},
 
 			dataType : "json",
 			success : function(result) {
 				console.log(result);
 				/*성공시 처리해야될 코드 작성*/
-				if (result) {
+				if (result !== null) {
 					$("#idCheckMsg").html(id + "는 사용중인 아이디 입니다");
 				} else {
 					$("#idCheckMsg").html(id + "는 사용가능한 아이디 입니다");

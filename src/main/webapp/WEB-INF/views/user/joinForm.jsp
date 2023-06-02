@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,13 +13,15 @@
 	rel="stylesheet" type="text/css">
 
 </head>
+<script
+	src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
 
 <body>
 	<div id="wrap">
 
 		<c:import url="/WEB-INF/views/include/header.jsp" />
 		<!-- //header -->
-		
+
 		<c:import url="/WEB-INF/views/include/nav.jsp" />
 		<!-- //nav -->
 
@@ -56,7 +59,9 @@
 							<label class="form-text" for="input-uid">아이디</label> <input
 								type="text" id="input-uid" name="id" value=""
 								placeholder="아이디를 입력하세요">
-							<button type="button" id="">중복체크</button>
+							<button type="button" id="idCheck">중복체크</button>
+							<br>
+							<p id="idCheckMsg" align="center"></p>
 						</div>
 
 						<!-- 비밀번호 -->
@@ -111,5 +116,40 @@
 	<!-- //wrap -->
 
 </body>
+
+<script>
+	//아이디 체크 버튼 클릭
+	$("#idCheck").on("click", function() {
+		console.log("나오냐");
+
+		//통신 id
+		var id = $("[name=id]").val();
+		console.log(id);
+
+		$.ajax({
+
+			url : "${pageContext.request.contextPath}/user/idCheck",
+			type : "post",
+			//contentType : "application/json",
+			data : { id : id },
+
+			dataType : "json",
+			success : function(result) {
+				console.log(result);
+				/*성공시 처리해야될 코드 작성*/
+				if (result) {
+					$("#idCheckMsg").html(id + "는 사용중인 아이디 입니다");
+				} else {
+					$("#idCheckMsg").html(id + "는 사용가능한 아이디 입니다");
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+
+		});
+
+	});
+</script>
 
 </html>

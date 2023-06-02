@@ -20,6 +20,17 @@ public class UserService {
 
 		return userDAO.insertUser(vo);
 	}
+	// ------------------- idCheck -----------------------
+	public UserVO idCheck(String id) {
+		System.out.println("Service idCheck");
+//		int result = 0;
+//		userVO = userDAO.selectUser(id);
+//		if(userVO.getId().equals(id)) {
+//			result=1;
+//		}
+		
+		return userDAO.selectUser(id);
+	}
 	
 	// ------------------- loginUser -----------------------
 		public UserVO loginUser(UserVO vo) {

@@ -32,6 +32,16 @@
        	where id = #{id} and password = #{password}
     ]]>
 	</select>
+	
+	<!-- selectUserByid -->
+	<select id="selectUserByid" parameterType="String" resultType="UserVO">
+    <![CDATA[
+        select  no,
+        		id        		
+        from users
+       	where id = #{value}
+    ]]>
+	</select>
 
 
 	<!-- getUser -->

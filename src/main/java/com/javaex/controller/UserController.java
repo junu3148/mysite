@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.UserService;
 import com.javaex.vo.UserVO;
@@ -29,15 +30,28 @@ public class UserController {
 	@RequestMapping(value = "/joinForm", method = { RequestMethod.GET, RequestMethod.POST })
 	public String joinForm() {
 		System.out.println("joinForm");
-		
+
 		return "/user/joinForm";
+	}
+
+	// --------------------------- Ajax 아이디체크 ------------------------------------
+	@RequestMapping(value = "/idCheck", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public UserVO idCheck(@RequestParam("id") String id,Model model) {
+		System.out.println("idCheck");
+		System.out.println(id);
+		userVO = userService.idCheck(id);
+		System.out.println(userVO);
+		
+		return userVO;
+
 	}
 
 	// ---------------------------- 회원 가입 --------------------------------------
 	@RequestMapping(value = "/join", method = { RequestMethod.GET, RequestMethod.POST })
 	public String join(@ModelAttribute UserVO vo) {
 		System.out.println("join");
-		
+
 		String uri = "redirect:/user/joinForm";
 		int row = userService.insertUser(vo);
 		if (row > 0) {
@@ -61,13 +75,13 @@ public class UserController {
 
 		this.userVO = userService.loginUser(vo);
 		String uri;
-		if (this.userVO!=null) {
+		if (this.userVO != null) {
 			session.setAttribute("user", this.userVO);
 			uri = "/main/index";
-		}else {
+		} else {
 			uri = "redirect:/user/loginForm?result=fail";
 		}
-		
+
 		return uri;
 	}
 
@@ -81,14 +95,15 @@ public class UserController {
 		return "redirect:/main";
 	}
 
-	// ---------------------------- modifyForm --------------------------------------
+	// ---------------------------- modifyForm
+	// --------------------------------------
 	@RequestMapping(value = "/modifyForm", method = { RequestMethod.GET, RequestMethod.POST })
 	public String modifyForm(HttpSession session, Model model) {
 		System.out.println("modifyForm");
-		
-		userVO = userService.getUser((UserVO)session.getAttribute("user"));
+
+		userVO = userService.getUser((UserVO) session.getAttribute("user"));
 		model.addAttribute("user", userVO);
-		
+
 		return "/user/modifyForm";
 	}
 
@@ -100,7 +115,7 @@ public class UserController {
 //		vo.setId(userVO.getId());
 //		vo.setNo(userVO.getNo());
 		userService.updateUser(vo);
-		
+
 		return "redirect:/main";
 	}
 

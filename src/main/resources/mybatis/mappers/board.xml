@@ -153,34 +153,28 @@
 		resultType="BoardVO">
 
 	<![CDATA[
-		select a.no no,
-		       b.name name,
-		       a.title title,
-		       a.content content,
-		       a.hit hit,
-		       a.regDate regDate,
-		       a.userNo userNo
-		from (select x.no,
-		             x.title,
-		             x.content,
-		             x.hit,
-		             x.regDate,
-		             x.userNo,
-		             rownum as rn
-		      from (select board.no,
-		                   board.title,
-		                   board.content,
-		                   board.hit,
-		                   board.reg_date as regDate,
-		                   board.user_no as userNo
-		            from board
-		           WHERE board.title LIKE '%'||#{keyword}||'%'
-		            order by board.no desc) x
-		      where rownum <= #{pageNum} * #{amount}) a
-		join users b on a.userNo = b.no
-		where a.rn > (#{pageNum}-1) * #{amount}
-		order by a.no desc
-		
+		 SELECT b.no, 
+             b.title, 
+             u.name, 
+             b.hit, 
+             b.reg_date as regDate, 
+             b.user_no as userNo, 
+             b.content
+		      FROM (
+		            SELECT rownum as rn, 
+		                   b.no, 
+		                   b.title, 
+		                   b.content , 
+		                   b.user_no,
+		                   b.reg_date ,
+		                   b.hit
+		            FROM board b JOIN users u ON b.user_no = u.no
+		              where rownum <= #{pageNum} * #{amount} 
+		              and b.title LIKE '%1%'      
+			          ORDER BY b.no DESC ) b, users u
+		          WHERE b.user_no = u.no and b.rn > (#{pageNum}-1) * #{amount}
+		          ORDER BY b.no DESC
+			
 	]]>
 
 	</select>
@@ -189,9 +183,11 @@
 	<select id="serchBoardCount" parameterType="Criteria"
 		resultType="java.lang.Integer">
   <![CDATA[
-	    SELECT COUNT(*) AS count
-	    FROM board
-	    WHERE title LIKE '%'||#{keyword}||'%'
+
+	     SELECT COUNT(*) AS count
+	     FROM board b, users c
+	     where b.user_no = c.no 
+		 and title LIKE '%1%'
   ]]>
 	</select>
 

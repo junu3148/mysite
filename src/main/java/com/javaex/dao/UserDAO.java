@@ -19,6 +19,12 @@ public class UserDAO {
 		
 		return sqlSession.insert("user.insertUser", vo);
 	}
+	// ------------------- idCheck -----------------------
+	public UserVO selectUser(String id) {
+		System.out.println("DAO selectUser");
+		 	
+		return sqlSession.selectOne("user.selectUserByid", id);
+	}
 	
 	//------------------- loginUser -----------------------
 	public UserVO loginUser(UserVO vo) {

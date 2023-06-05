@@ -24,9 +24,7 @@ public class GuestBookDAO {
 	//------------------------ addList ---------------------------------
 	public int addGuest(GuestBookVO vo) {
 		System.out.println("DAO addGuest()");
-		
-		System.out.println(vo);
-				
+						
 		int cont = sqlSession.insert("guestbook.apiaddList", vo);
 		
 		return cont;

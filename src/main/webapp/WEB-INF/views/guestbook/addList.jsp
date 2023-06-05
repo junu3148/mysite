@@ -98,14 +98,14 @@
 					<input type="hidden" name="action" value="add">
 
 				</form>
-				<table class="guestRead">
-					<colgroup>
-						<col style="width: 10%;">
-						<col style="width: 40%;">
-						<col style="width: 40%;">
-						<col style="width: 10%;">
-					</colgroup>
-					<c:forEach var="list" items="${guestBookList}">
+				<c:forEach var="list" items="${guestBookList}">
+					<table class="guestRead">
+						<colgroup>
+							<col style="width: 10%;">
+							<col style="width: 40%;">
+							<col style="width: 40%;">
+							<col style="width: 10%;">
+						</colgroup>
 						<tr>
 							<td>${list.boardId}</td>
 							<td>${list.name}</td>
@@ -116,8 +116,8 @@
 						<tr>
 							<td colspan="4" class="text-left">${list.content}</td>
 						</tr>
-					</c:forEach>
-				</table>
+					</table>
+				</c:forEach>
 				<!-- //guestRead -->
 			</div>
 			<!-- //guestbook -->

@@ -109,19 +109,17 @@
 								<col style="width: 40%;">
 								<col style="width: 40%;">
 								<col style="width: 10%;">
-							</colgroup>
-							
-								<tr>
-									<td>${list.boardId}</td>
-									<td>${list.name}</td>
-									<td>${list.regDate}</td>
-									<td><a
-										href="${pageContext.request.contextPath}/guestbook/deleteForm?boardId=${list.boardId}">[삭제]</a></td>
-								</tr>
-								<tr>
-									<td colspan="4" class="text-left">${list.content}</td>
-								</tr>
-							
+							</colgroup>							
+							<tr>
+								<td>${list.boardId}</td>
+								<td>${list.name}</td>
+								<td>${list.regDate}</td>
+								<td><a
+									href="${pageContext.request.contextPath}/guestbook/deleteForm?boardId=${list.boardId}">[삭제]</a></td>
+							</tr>
+							<tr>
+								<td colspan="4" class="text-left">${list.content}</td>
+							</tr>							
 						</table>
 					</c:forEach>
 				</div>
@@ -154,7 +152,7 @@
 				content : content			
 		};
 	
-		var guestbook = $("#guest");
+		
 		
 		$.ajax({
 
@@ -165,36 +163,49 @@
 
 			dataType : "json",
 			success : function(jsonResult) {
-				console.log(jsonResult);
-				console.log(jsonResult.data.boardId);
-				
-				var str = "";
-				str += '<table class="guestRead">';
-				str += '      <colgroup>';
-				str += '      		<col style="width: 10%;">';
-				str += '      		<col style="width: 40%;">';
-				str += '      		<col style="width: 40%;">';
-				str += '      		<col style="width: 10%;">';
-				str += '      </colgroup>';
-				str += '      <tr>';
-				str += '      		<td>'+jsonResult.data.boardId+'</td>';
-				str += '      		<td>'+jsonResult.data.name+'</td>';
-				str += '      		<td>'+jsonResult.data.regDate+'</td>';
-				str += '      		<td><a href="${pageContext.request.contextPath}/guestbook/deleteForm?boardId='+jsonResult.data.boardId+'">[삭제]</a></td>';
-				str += '      </tr>';
-				str += '      <tr>';
-				str += '      		<td colspan="4" class="text-left">'+ jsonResult.data.content +'</td>';
-				str += '      </tr>';
-				str += '</table>';
-		        guestbook.prepend(str);
-				
-			
+				if(jsonResult.result == 'success'){
+					
+					render(jsonResult.data);
+					
+					$("[name='name']").val(""); //추가 후 input 요소 비워주기
+	                $("[name='pwd']").val(""); //추가 후 input 요소 비워주기
+	                $("[name='content']").val(""); //추가 후 input 요소 비워주기
+	                
+				}else{
+					
+				}			
+						
 		/* 	},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error); */
 			}
-
 		});
+		
+		//방명록 리스트 그리기
+		function render(guestBookVO){
+			
+			var str = "";
+			str += '<table class="guestRead">';
+			str += '      <colgroup>';
+			str += '      		<col style="width: 10%;">';
+			str += '      		<col style="width: 40%;">';
+			str += '      		<col style="width: 40%;">';
+			str += '      		<col style="width: 10%;">';
+			str += '      </colgroup>';
+			str += '      <tr>';
+			str += '      		<td>'+ guestBookVO.boardId +'</td>';
+			str += '      		<td>'+ guestBookVO.name +'</td>';
+			str += '      		<td>'+ guestBookVO.regDate +'</td>';
+			str += '      		<td><a href="${pageContext.request.contextPath}/guestbook/deleteForm?boardId='+ guestBookVO.boardId +'">[삭제]</a></td>';
+			str += '      </tr>';
+			str += '      <tr>';
+			str += '      		<td colspan="4" class="text-left">'+ guestBookVO.content +'</td>';
+			str += '      </tr>';
+			str += '</table>';
+			
+			$("#guest").prepend(str);
+			
+		}
 
 	});
 </script>

@@ -2,9 +2,7 @@
 package com.javaex.controller;
 
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
-import org.eclipse.jdt.internal.compiler.ast.ThisReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.UserService;
+import com.javaex.vo.JsonResult;
 import com.javaex.vo.UserVO;
 
 @Controller
@@ -35,17 +34,23 @@ public class UserController {
 	}
 
 	// --------------------------- Ajax 아이디체크 ------------------------------------
-	@RequestMapping(value = "/idCheck", method = { RequestMethod.GET, RequestMethod.POST })
-	@ResponseBody
-	public UserVO idCheck(@RequestParam("id") String id,Model model) {
-		System.out.println("idCheck");
-		System.out.println(id);
-		userVO = userService.idCheck(id);
-		System.out.println(userVO);
-		
-		return userVO;
+		@RequestMapping(value = "/idCheck", method = { RequestMethod.GET, RequestMethod.POST })
+		@ResponseBody
+		public JsonResult idCheck(@RequestParam("id") String id,Model model) {
+			System.out.println("idCheck");
+			
+			boolean data= userService.idCheck(id);
+			
+			JsonResult jsonResult = new JsonResult();
+			
+			jsonResult.success(data);
+				
+			//jsonResult.fail("통신오류");
+			System.out.println(jsonResult);
+			
+			return jsonResult;
 
-	}
+		}
 
 	// ---------------------------- 회원 가입 --------------------------------------
 	@RequestMapping(value = "/join", method = { RequestMethod.GET, RequestMethod.POST })

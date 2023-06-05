@@ -119,39 +119,54 @@
 
 <script>
 	//아이디 체크 버튼 클릭
-	$("#idCheck").on("click", function() {
-		console.log("나오냐");
+	$("#idCheck").on(
+			"click",
+			function() {
+				console.log("나오냐");
 
-		//통신 id
-		var id = $("[name=id]").val();
-		console.log(id);
+				//통신 id
+				var id = $("[name=id]").val();
+				console.log(id);
 
-		$.ajax({
+				$.ajax({
 
-			url : "${pageContext.request.contextPath}/user/idCheck",
-			type : "post",
-			//contentType : "application/json",
-			data : {
-				id : id
-			},
+					url : "${pageContext.request.contextPath}/user/idCheck",
+					type : "post",
+					//contentType : "application/json",
+					data : {
+						id : id
+					},
 
-			dataType : "json",
-			success : function(result) {
-				console.log(result);
-				/*성공시 처리해야될 코드 작성*/
-				if (result !== null) {
-					$("#idCheckMsg").html(id + "는 사용중인 아이디 입니다");
-				} else {
-					$("#idCheckMsg").html(id + "는 사용가능한 아이디 입니다");
-				}
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
+					dataType : "json",
+					success : function(jsonResult) {
+						console.log(jsonResult);
+						/* 성공 시 처리해야할 코드 작성 */
 
-		});
+						if (jsonResult.result == 'success') {
 
-	});
+							if (jsonResult.data === true) { 
+								$("#idCheckMsg").css("color", "black").html(
+										id + "는 사용가능한 아이디입니다");
+
+							} else {
+								$("#idCheckMsg").css("color", "red").html(
+										id + "는 사용중인 아이디입니다");
+
+							}
+
+						} else {
+							$("#idCheckMsg").css("color", "black").html("코드에러");
+
+						}
+
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+
+				});
+
+			});
 </script>
 
 </html>

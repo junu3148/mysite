@@ -10,7 +10,8 @@
 	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/guestbook.css"
 	rel="stylesheet" type="text/css">
-
+<script
+	src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
 <script>
 	function valiaddForm() {
 		var name = document.forms["addList"]["name"].value;
@@ -55,12 +56,12 @@
 		<div id="content">
 
 			<div id="content-head">
-				<h3>일반방명록</h3>
+				<h3>ajax방명록</h3>
 				<div id="location">
 					<ul>
 						<li>홈</li>
 						<li>방명록</li>
-						<li class="last">일반방명록</li>
+						<li class="last">ajax방명록</li>
 					</ul>
 				</div>
 				<div class="clear"></div>
@@ -68,7 +69,7 @@
 			<!-- //content-head -->
 
 			<div id="guestbook">
-				<form action="./addList" method="get" name="addList" onsubmit="return valiaddForm()">
+				<!-- <form action="./addList" method="get" name="addList" onsubmit="return valiaddForm()"> -->
 					<table id="guestAdd">
 						<colgroup>
 							<col style="width: 70px;">
@@ -89,7 +90,7 @@
 								<td colspan="4"><textarea name="content" cols="72" rows="5"></textarea></td>
 							</tr>
 							<tr class="button-area">
-								<td colspan="4"><button type="submit">등록</button></td>
+								<td colspan="4"><button type="button" id="btnSubmit">등록</button></td>
 							</tr>
 						</tbody>
 
@@ -97,7 +98,7 @@
 					<!-- //guestWrite -->
 					<input type="hidden" name="action" value="add">
 
-				</form>
+		<!-- 		</form> -->
 				<table class="guestRead">
 					<colgroup>
 						<col style="width: 10%;">
@@ -132,5 +133,13 @@
 	<!-- //wrap -->
 
 </body>
+
+<script>
+
+$("#btnSubmit").on("click",function(){
+	console.log("버튼클릭");
+	
+});
+</script>
 
 </html>

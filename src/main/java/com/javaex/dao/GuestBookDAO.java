@@ -20,6 +20,26 @@ public class GuestBookDAO {
 		
 		return sqlSession.insert("guestbook.addList", vo);
 	}
+	
+	//------------------------ addList ---------------------------------
+	public int addGuest(GuestBookVO vo) {
+		System.out.println("DAO addGuest()");
+		
+		System.out.println(vo);
+				
+		int cont = sqlSession.insert("guestbook.apiaddList", vo);
+		
+		return cont;
+	}
+	
+	// ---------------------- getGuestBook -------------------------------
+		public GuestBookVO getGuestBook(int num) {
+			System.out.println("DAO getGuestBookList()");
+			
+			GuestBookVO guestBook = sqlSession.selectOne("guestbook.getGuestBook",num);
+
+			return guestBook;
+		}
 
 	// ---------------------- getGuestBookList -------------------------------
 	public List<GuestBookVO> getGuestBookList() {

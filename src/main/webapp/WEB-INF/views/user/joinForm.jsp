@@ -119,9 +119,7 @@
 
 <script>
 	//아이디 체크 버튼 클릭
-	$("#idCheck").on(
-			"click",
-			function() {
+	$("#idCheck").on("click",function() {
 				console.log("나오냐");
 
 				//통신 id

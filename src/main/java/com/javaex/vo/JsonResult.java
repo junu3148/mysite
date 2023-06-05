@@ -17,7 +17,6 @@ public class JsonResult {
 		this.failMsg = failMsg;
 	}
 	
-	
 
 	public String getResult() {
 		return result;

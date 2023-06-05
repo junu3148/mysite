@@ -22,6 +22,35 @@
 
 	</insert>
 
+	<!-- apiaddList -->
+	<insert id="apiaddList" parameterType="GuestBookVO">
+		<selectKey keyProperty="boardId" resultType="int"
+			order="BEFORE">
+			SELECT register_seq.nextval AS boardId FROM dual
+		</selectKey>
+    <![CDATA[
+    insert into register
+        (boardId, name, pwd, content, regdate) 
+    values 
+        (#{boardId}, #{name}, #{pwd}, #{content}, sysdate)
+    ]]>
+	</insert>
+
+	<!-- getGuestBook -->
+	<select id="getGuestBook" parameterType="int"
+		resultType="GuestBookVO">
+	
+			select boardId,
+			name,
+			pwd,
+			content,
+			regdate
+			from register
+			where
+			boardId = #{value}
+	  
+	</select>
+
 	<!-- getGuestBookList -->
 	<select id="getGuestBookList" resultType="GuestBookVO">
 		<![CDATA[

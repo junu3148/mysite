@@ -8,9 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.javaex.service.GuestBookService;
 import com.javaex.vo.GuestBookVO;
 import com.javaex.vo.JsonResult;
@@ -48,5 +46,24 @@ public class ApiGuestBookController {
 
 		return jsonResult;
 	}
+	
+	@RequestMapping(value = "/delete", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public JsonResult delete(@ModelAttribute GuestBookVO vo) {
+		System.out.println("delete");
+					
+		int row = guestBookService.deleteGuestBook(vo);
+		
+		JsonResult jsonResult = new JsonResult();
+		jsonResult.success(row);
+		
+		return jsonResult;
+	}
 
 }
+
+
+
+
+
+

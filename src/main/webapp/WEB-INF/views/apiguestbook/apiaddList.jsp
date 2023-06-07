@@ -10,16 +10,22 @@
 	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/guestbook.css"
 	rel="stylesheet" type="text/css">
-	
-<!-- 부트스트랩 css -->	
-<link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+<!-- 부트스트랩 css -->
+<link
+	href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.css"
+	rel="stylesheet">
 
 <!-- jquery -->
-<script	src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
+<script
+	src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
 
 <!-- 부트스트랩 js -->
-<script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.js"></script>
+<script
+	src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.js"></script>
 
+<!-- 모달 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -68,15 +74,13 @@
 					</colgroup>
 					<tbody>
 						<tr>
-							<th><label class="form-text" for="input-uname">이름</label>
-							</th>
+							<th><label class="form-text" for="input-uname">이름</label></th>
 							<td><input id="input-uname" type="text" name="name" required></td>
-							<th><label class="form-text" for="input-pass">패스워드</label>
-							</th>
+							<th><label class="form-text" for="input-pass">패스워드</label></th>
 							<td><input id="input-pass" type="password" name="pwd"></td>
 						</tr>
 						<tr>
-							<td colspan="4"><textarea name="content" cols="72" rows="5" ></textarea></td>
+							<td colspan="4"><textarea name="content" cols="72" rows="5"></textarea></td>
 						</tr>
 						<tr class="button-area">
 							<td colspan="4"><button type="button" id="btnSubmit">등록</button></td>
@@ -88,26 +92,27 @@
 				<input type="hidden" name="action" value="add">
 
 				<!-- 		</form> -->
-				<div id ="guest">
+				<div id="guest">
 					<c:forEach var="list" items="${guestBookList}">
-						<table id="t${list.boardId}" class="guestRead" >
+						<table id="t${list.boardId}" class="guestRead">
 							<colgroup>
 								<col style="width: 10%;">
 								<col style="width: 40%;">
 								<col style="width: 40%;">
 								<col style="width: 10%;">
-							</colgroup>							
+							</colgroup>
 							<tr>
-								<td >${list.boardId}</td>
+								<td>${list.boardId}</td>
 								<td>${list.name}</td>
 								<td>${list.regDate}</td>
 								<td class="td">
-									<button type="button" class="btn btn-danger btn-sm deletemodal" data-no="${list.boardId}" >삭제</button>
+									<button type="button" class="btn btn-danger btn-sm deletemodal"
+										data-no="${list.boardId}">삭제</button>
 								</td>
 							</tr>
 							<tr>
 								<td colspan="4" class="text-left">${list.content}</td>
-							</tr>							
+							</tr>
 						</table>
 					</c:forEach>
 				</div>
@@ -123,17 +128,21 @@
 
 	</div>
 	<!-- //wrap -->
-	
-<!-- 삭제 modal ------------------------------------------------------------------------------------>
-	
+
+	<!-- 삭제 modal ------------------------------------------------------------------------------------>
+
 	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel">삭제 모달창</h4>
-	      </div>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">삭제 모달창</h4>
+				</div>
 				<div class="modal-body">
 					<table id="guestDelete">
 						<colgroup>
@@ -145,7 +154,7 @@
 						<tr>
 							<td>비밀번호</td>
 							<td><input id="modalpwd" type="password" name="pwd">
-							<input id="modalboardId" type='hidden' name="boardId" >
+								<input id="modalboardId" type='hidden' name="boardId">
 							</td>
 							<td align="right"><a
 								href="${pageContext.request.contextPath}/main">[메인으로 돌아가기]</a></td>
@@ -155,35 +164,32 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 					<button id="btnDel" type="button" class="btn btn-danger btn-sm">삭제</button>
-				</div>				
+				</div>
 			</div>
-	  </div>
-	</div>	
+		</div>
+	</div>
 
-<!-- 삭제 modal ------------------------------------------------------------------------------------>
-	
+	<!-- 삭제 modal ------------------------------------------------------------------------------------>
+
 
 </body>
 
 <script>
-//모달창에 있는 삭제 버튼 클릭했을때
-	$("#btnDel").on("click",function(){
+	//모달창에 있는 삭제 버튼 클릭했을때
+	$("#btnDel").on("click", function() {
 		console.log("삭제버튼");
-		
+
 		//숨겨놓은 넘버값 저장
-		var boardId =  $("#modalboardId").val();
+		var boardId = $("#modalboardId").val();
 		//입력된 비밀번호 저장
-		var pwd =  $("#modalpwd").val();
+		var pwd = $("#modalpwd").val();
 		//객채로 만들기
 		var guestbookVO = {
-				boardId : boardId,
-				pwd : pwd
-						
+			boardId : boardId,
+			pwd : pwd
+
 		};
-		//버튼 클릭후 모달창 끄기
-		$("#myModal").modal("hide");
-		
-		
+
 		$.ajax({
 
 			url : "${pageContext.request.contextPath}/apiguestbook/delete",
@@ -193,116 +199,128 @@
 
 			dataType : "json",
 			success : function(jsonResult) {
-				
-				if(jsonResult.result == 'success'){
-					//삭제가된 넘버 가지고오기
-					var boardId = guestbookVO.boardId;
-					//테이블에 아이디를 넘버로 부여하고 타게팅해서 지우기
-					 $("#t" + boardId).remove();	 
-				
-				}else{
-					
-				}			
+
+				if (jsonResult.result == 'success') {
+					console.log(jsonResult);
+					if (jsonResult.data > 0) {
+						//삭제가된 넘버 가지고오기
+						var boardId = guestbookVO.boardId;
+						//테이블에 아이디를 넘버로 부여하고 타게팅해서 지우기
+						$("#t" + boardId).remove();
+						//버튼 클릭후 모달창 끄기
+						$("#myModal").modal("hide");
 						
-		/* 	},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error); */
+						Swal.fire({
+							  position: 'center',
+							  icon: 'success',
+							  title: '삭제되었습니다',
+							  showConfirmButton: false,
+							  timer: 1500
+							});
+						
+					} else {
+						$("#modalpwd").val("");
+						Swal.fire({
+							  icon: 'error',
+							  title: '비밀번호가 틀렸습니다.'
+							});
+					}
+				} else {
+
+				}
 			}
 		});
-		
+		console.log("테스트"+guestbookVO.boardId);
+
 	});
 
+	//삭제 모달창 호출 버튼
+	$("#guest").on("click", ".deletemodal", function() {
 
-//삭제 모달창 호출 버튼
-	$("#guest").on("click",".deletemodal",function() {
-		
 		//삭제버튼 태그에서 no값 가져오기	
 		var num = $(this).data("no");
-		
+
 		//히든창 value 에 no값 넣기
 		var boardId = $("[name='boardId']");
 		boardId.val(num);
-		
+
 		//초기화
 		$("#modalpwd").val("");
-		
+
 		//모달창 보이기
 		$("#myModal").modal("show");
-		
-		
-		
+
 	});
+	//등록된 방명록 그려주기
+	$("#btnSubmit").on("click",function()
+		{ 	
+			console.log("버튼클릭");
 
+			var name = $("[name='name']").val();
+			var pwd = $("[name='pwd']").val();
+			var content = $("[name='content']").val();
 
-	$("#btnSubmit").on("click", function() {
-		console.log("버튼클릭");
-				
-		var name = $("[name='name']").val();
-		var pwd = $("[name='pwd']").val();
-		var content = $("[name='content']").val();
-	
-		var guestbookVO = {
+			var guestbookVO = {
 				name : name,
 				pwd : pwd,
-				content : content			
-		};
-	
-		
-		
-		$.ajax({
+				content : content
+			};
 
-			url : "${pageContext.request.contextPath}/apiguestbook/addList",
-			type : "post",
-			//contentType : "application/json",
-			data : guestbookVO,
+			$.ajax({
+					url : "${pageContext.request.contextPath}/apiguestbook/addList",
+					type : "post",
+					//contentType : "application/json",
+					data : guestbookVO,
 
-			dataType : "json",
-			success : function(jsonResult) {
-				if(jsonResult.result == 'success'){
-					
-					render(jsonResult.data);
-					
-					$("[name='name']").val(""); //추가 후 input 요소 비워주기
-	                $("[name='pwd']").val(""); //추가 후 input 요소 비워주기
-	                $("[name='content']").val(""); //추가 후 input 요소 비워주기
-	                
-				}else{
-					
-				}			
-						
-		/* 	},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error); */
+					dataType : "json",
+					success : function(jsonResult) {
+						if (jsonResult.result == 'success') {
+
+							render(jsonResult.data);
+
+							$("[name='name']").val(""); //추가 후 input 요소 비워주기
+							$("[name='pwd']").val(""); //추가 후 input 요소 비워주기
+							$("[name='content']").val(""); //추가 후 input 요소 비워주기
+
+						} else {
+
+						}
+
+						/* 	},
+							error : function(XHR, status, error) {
+								console.error(status + " : " + error); */
+					}
+				});
+
+			//방명록 리스트 그리기
+			function render(guestBookVO) {
+
+				var str = "";
+				str += '<table id="t'+ guestBookVO.boardId +'" class="guestRead">';
+				str += '      <colgroup>';
+				str += '      		<col style="width: 10%;">';
+				str += '      		<col style="width: 40%;">';
+				str += '      		<col style="width: 40%;">';
+				str += '      		<col style="width: 10%;">';
+				str += '      </colgroup>';
+				str += '      <tr>';
+				str += '      		<td>' + guestBookVO.boardId
+						+ '</td>';
+				str += '      		<td>' + guestBookVO.name + '</td>';
+				str += '      		<td>' + guestBookVO.regDate
+						+ '</td>';
+				str += '      		<td><button type="button" class="btn btn-danger btn-sm deletemodal" data-no="'+guestBookVO.boardId +'" >삭제</button></td>';
+				str += '      </tr>';
+				str += '      <tr>';
+				str += '      		<td colspan="4" class="text-left">'
+						+ guestBookVO.content + '</td>';
+				str += '      </tr>';
+				str += '</table>';
+
+				$("#guest").prepend(str);
+
 			}
 		});
-		
-		//방명록 리스트 그리기
-		function render(guestBookVO){
-			
-			var str = "";
-			str += '<table class="guestRead">';
-			str += '      <colgroup>';
-			str += '      		<col style="width: 10%;">';
-			str += '      		<col style="width: 40%;">';
-			str += '      		<col style="width: 40%;">';
-			str += '      		<col style="width: 10%;">';
-			str += '      </colgroup>';
-			str += '      <tr>';
-			str += '      		<td>'+ guestBookVO.boardId +'</td>';
-			str += '      		<td>'+ guestBookVO.name +'</td>';
-			str += '      		<td>'+ guestBookVO.regDate +'</td>';
-			str += '      		<td><button type="button" class="btn btn-danger btn-sm deletemodal" data-no="'+guestBookVO.boardId +'" >삭제</button></td>';
-			str += '      </tr>';
-			str += '      <tr>';
-			str += '      		<td colspan="4" class="text-left">'+ guestBookVO.content +'</td>';
-			str += '      </tr>';
-			str += '</table>';
-			
-			$("#guest").prepend(str);
-			
-		}
-
-	});
 </script>
 
 </html>

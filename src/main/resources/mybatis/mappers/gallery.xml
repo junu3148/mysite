@@ -32,12 +32,10 @@
 	</insert>
 	
 	<!-- deletegallery -->
-	<delete id="deletegallery" parameterType="GalleryVO">
+	<delete id="deletegallery" parameterType="int">
+  		
+  		DELETE FROM gallery WHERE no = #{value}
 	
-	<![CDATA[
-		
-			
-	]]>
 	</delete>
 	
 	<!-- getgallerylist -->
@@ -45,7 +43,7 @@
 	
 	<![CDATA[
 		 select a.no, a.user_no, a.content, a.filepath, a.orgname, a.savename, a.filesize, b.name
-         from gallery a join users b on a.user_no=b.no
+         from gallery a join users b on a.user_no=b.no order by a.no desc
 			
 	]]>
 	

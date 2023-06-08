@@ -86,10 +86,10 @@ public class GalleryService {
 
 	}
 
-	public int deleteGallery(GalleryVO vo) {
+	public int deleteGallery(int no) {
 		System.out.println("GalleryService deleteGallery()");
 
-		return galleryDAO.deleteGallery(vo);
+		return galleryDAO.deleteGallery(no);
 	}
 
 }

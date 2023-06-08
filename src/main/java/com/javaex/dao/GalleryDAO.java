@@ -39,10 +39,10 @@ public class GalleryDAO {
 	}
 	
 
-	public int deleteGallery(GalleryVO vo) {
+	public int deleteGallery(int no) {
 		System.out.println("GalleryDAO deleteGallery()");
+	
+		return sqlSession.delete("gallery.deletegallery",no);
 		
-		
-		return 0;
 	}
 }

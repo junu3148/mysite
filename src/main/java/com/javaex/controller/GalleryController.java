@@ -17,67 +17,60 @@ import com.javaex.vo.GalleryVO;
 import com.javaex.vo.JsonResult;
 
 @Controller
-@RequestMapping(value="/gallery")
+@RequestMapping(value = "/gallery")
 public class GalleryController {
-	
+
 	@Autowired
 	private GalleryService galleryService;
-	
-	@RequestMapping(value="/list", method = {RequestMethod.GET,RequestMethod.POST})
+
+	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
 	public String galleryList(Model moel) {
 		System.out.println("galleryList()");
-		
-		List<GalleryVO> galleryList =galleryService.getGalleryList();
-		
+
+		List<GalleryVO> galleryList = galleryService.getGalleryList();
+
 		moel.addAttribute("galleryList", galleryList);
-		
+
 		return "/gallery/list";
 	}
-	
-	@RequestMapping(value="/getgallery", method = {RequestMethod.GET,RequestMethod.POST})
+
+	@RequestMapping(value = "/getgallery", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public JsonResult getGallery(@ModelAttribute GalleryVO vo) {
 		System.out.println("galleryList()");
-		
+
 		GalleryVO galleryVO = galleryService.getGallery(vo);
-		
+
 		JsonResult jsonResult = new JsonResult();
-		
+
 		jsonResult.success(galleryVO);
-		
+
 		return jsonResult;
 	}
-	
-	@RequestMapping(value="/insert", method = {RequestMethod.GET,RequestMethod.POST})
-	public String insertGallery(@RequestParam("file") MultipartFile file,@ModelAttribute GalleryVO vo) {
+
+	@RequestMapping(value = "/insert", method = { RequestMethod.GET, RequestMethod.POST })
+	public String insertGallery(@RequestParam("file") MultipartFile file, @ModelAttribute GalleryVO vo) {
 		System.out.println("insertGallery()");
-			
-		galleryService.insertGallery(file,vo);
-		
+
+		galleryService.insertGallery(file, vo);
+
 		return "redirect:/gallery/list";
-		
+
 	}
 
-	
-	@RequestMapping(value="/delete", method = {RequestMethod.GET,RequestMethod.POST})
-	public String deleteGallery(@ModelAttribute GalleryVO vo) {
+	@RequestMapping(value = "/delete", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public JsonResult deleteGallery(@RequestParam("no") int no) {
 		System.out.println("deleteGallery()");
-		
-		int result = galleryService.deleteGallery(vo);
-		
-		return "";
-		
+
+		int result = galleryService.deleteGallery(no);
+
+		JsonResult jsonResult = new JsonResult();
+
+		jsonResult.success(result);
+
+		return jsonResult;
+
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-

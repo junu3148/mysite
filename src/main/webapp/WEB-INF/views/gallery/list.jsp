@@ -69,7 +69,7 @@
 						<!-- 이미지반복영역 -->
 						<c:forEach items="${galleryList}" var="gallery">
 							<li>
-								<div class="view" data-no="${gallery.no}">
+								<div id="g${gallery.no}" class="view" data-no="${gallery.no}">
 									<img class="imgItem"
 										src="${pageContext.request.contextPath}/upload/${gallery.saveName}" >
 										
@@ -185,12 +185,11 @@
 
 	/* 인서트 모달 이벤트처리 */
 	$("#btnImgUpload").on("click", function() {
-		console.log("이미지올리기")
-
+		
 		$("#addModal").modal("show");
 
 	});
-	
+	// view 모달창
 	$(".view").on("click",function(){
 				
 		var no = $(this).data("no");
@@ -199,54 +198,95 @@
 			no : no
 		};
 		
+		getgallery(galleryVO);
+		
+	});
+	
+	$("#btnDel").on("click",function(){
+		
+		//숨겨둔 겔러리no 가져오기
+		var delno = $("#hiddenNo").val();
+		
+		delgallery(delno);
+		
+				
+	});
+	
+	// 삭제
+	function delgallery(delno){
+		
+		
 		$.ajax({
 			
-			url : "${pageContext.request.contextPath }/gallery/getgallery",		
-			type : "post",
+			url : "${pageContext.request.contextPath }/gallery/delete",		
+			type : "get",
 			//contentType : "application/json",
-			data : galleryVO,
+			data : {no:delno},
 
 			dataType : "json",
 			success : function(jsonResult){
-				console.log(jsonResult)
-				
-				//사진경로 삽입
-				var saveName = "${pageContext.request.contextPath}/upload/"+jsonResult.data.saveName ;
-				$("#viewModelImg").attr("src", saveName);
-				
-				//내용 삽입
-				var content = jsonResult.data.content;
-				$("#viewModelContent").text(content);
-				
-				//no 삽입
-				var no = jsonResult.data.no;
-				$("#hiddenNo").val(no);
-				
-				//삭제창 띄우기
-				var userNo = $("[name='userNo']").val();
-				if(userNo==jsonResult.data.userNo){
-					$("#btnDel").show();
-				}else{
-					$("#btnDel").hide();
-				}
 				
 				
-				//모달창 띄우기
-				$("#viewModal").modal("show");
+				//삭제된 갤러리제거
+				$("#g" +delno).remove();
+				//모다창 닫기
+				$("#viewModal").modal("hide");
 				
-				//$(".formgroup").remove();
-								
-				
-				/*성공시 처리해야될 코드 작성*/
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
 			}
 		});
 		
-	});
-	
-	
+	};
+	// 이미지보기 팝업(모달)창
+	function getgallery(galleryVO){
+		
+		$.ajax({
+					
+					url : "${pageContext.request.contextPath }/gallery/getgallery",		
+					type : "post",
+					//contentType : "application/json",
+					data : galleryVO,
+		
+					dataType : "json",
+					success : function(jsonResult){
+						console.log(jsonResult)
+						
+						//사진경로 삽입
+						var saveName = "${pageContext.request.contextPath}/upload/"+jsonResult.data.saveName ;
+						$("#viewModelImg").attr("src", saveName);
+						
+						//내용 삽입
+						var content = jsonResult.data.content;
+						$("#viewModelContent").text(content);
+						
+						//no 삽입
+						var no = jsonResult.data.no;
+						$("#hiddenNo").val(no);
+						
+						//삭제창 띄우기
+						var userNo = $("[name='userNo']").val();
+						if(userNo==jsonResult.data.userNo){
+							$("#btnDel").show();
+						}else{
+							$("#btnDel").hide();
+						}
+						
+						
+						//모달창 띄우기
+						$("#viewModal").modal("show");
+						
+						//$(".formgroup").remove();
+										
+						
+						/*성공시 처리해야될 코드 작성*/
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
+	};
 	
 </script>
 

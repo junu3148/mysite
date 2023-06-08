@@ -2,6 +2,8 @@ package com.javaex.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.GalleryService;
 import com.javaex.vo.GalleryVO;
+import com.javaex.vo.UserVO;
 
 @Controller
 @RequestMapping(value="/gallery")
@@ -27,20 +30,21 @@ public class GalleryController {
 		
 		List<GalleryVO> galleryList =galleryService.getGalleryList();
 		
-		//moel.addAttribute("galleryList", galleryList);
+		moel.addAttribute("galleryList", galleryList);
 		
 		return "/gallery/list";
 	}
 	
 	@RequestMapping(value="/insert", method = {RequestMethod.GET,RequestMethod.POST})
-	public String insertGallery(@RequestParam("file") MultipartFile file) {
+	public String insertGallery(@RequestParam("file") MultipartFile file,@ModelAttribute GalleryVO vo) {
 		System.out.println("insertGallery()");
+			
+		galleryService.insertGallery(file,vo);
 		
-		galleryService.insertGallery(file);
-		
-		return "";
+		return "redirect:/gallery/list";
 		
 	}
+
 	
 	@RequestMapping(value="/delete", method = {RequestMethod.GET,RequestMethod.POST})
 	public String deleteGallery(@ModelAttribute GalleryVO vo) {

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
@@ -8,12 +9,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link href="${pageContext.request.contextPath }/assets/css/mysite.css" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath }/assets/css/gallery.css" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath }/assets/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/assets/css/mysite.css"
+	rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/assets/css/gallery.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="${pageContext.request.contextPath }/assets/bootstrap/css/bootstrap.css"
+	rel="stylesheet" type="text/css">
 
-<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/assets/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/assets/bootstrap/js/bootstrap.js"></script>
 
 </head>
 
@@ -51,23 +58,26 @@
 			<div id="gallery">
 				<div id="list">
 
+					<c:if test="${!empty user.id}">
+						<button id="btnImgUpload">이미지올리기</button>
+					</c:if>
 
-					<button id="btnImgUpload">이미지올리기</button>
 					<div class="clear"></div>
 
 
 					<ul id="viewArea">
 
 						<!-- 이미지반복영역 -->
-						<c:forEach begin="1" end="15">
-						<li>
-							<div class="view">
-								<img class="imgItem" src="${pageContext.request.contextPath }/assets/image/profile.jpg">
-								<div class="imgWriter">
-									작성자: <strong>유재석</strong>
+						<c:forEach items="${galleryList}" var="gallery">
+							<li>
+								<div class="view">
+									<img class="imgItem"
+										src="${pageContext.request.contextPath}/upload/${gallery.saveName}">
+									<div class="imgWriter">
+										작성자: <strong>${gallery.name}</strong>
+									</div>
 								</div>
-							</div>
-						</li>
+							</li>
 						</c:forEach>
 						<!-- 이미지반복영역 -->
 
@@ -94,19 +104,23 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title">이미지등록</h4>
 				</div>
 
-				<form method="" action="">
+				<form method="post" action="./insert" enctype="multipart/form-data">
 					<div class="modal-body">
 						<div class="form-group">
-							<label class="form-text">글작성</label> <input id="addModalContent" type="text" name="" value="">
+							<label class="form-text">글작성</label> <input id="addModalContent"
+								type="text" name="content" value="">
 						</div>
 						<div class="form-group">
-							<label class="form-text">이미지선택</label> <input id="file" type="file" name="" value="">
+							<label class="form-text">이미지선택</label> <input id="file"
+								type="file" name="file" value=""> <input type="hidden"
+								name="userNo" value="${user.no}">
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -129,7 +143,8 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title">이미지보기</h4>
@@ -166,8 +181,14 @@
 </body>
 
 <script type="text/javascript">
-	
+	$("#btnImgUpload").on("click", function() {
+		console.log("이미지올리기")
+
+		$("#addModal").modal("show");
+
+	});
 </script>
+
 
 
 

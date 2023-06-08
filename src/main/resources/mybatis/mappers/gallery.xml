@@ -8,6 +8,24 @@
 
 	<![CDATA[
 		
+		INSERT INTO gallery (
+							  no,
+							  user_no, 
+							  content, 
+							  filepath, 
+							  orgname, 
+							  savename, 
+							  filesize
+							)
+ 					 values (
+ 					 		 seq_gallery_no.nextval ,
+ 					 		 #{userNo},
+ 					 		 #{content},
+ 					 		 #{filePath},
+ 					 		 #{orgName},
+ 					 		 #{saveName},
+ 					 		 #{fileSize} 					 		 
+ 							)
 			
 	]]>
 
@@ -22,9 +40,14 @@
 	]]>
 	</delete>
 	
-	<!-- getfilelist -->
+	<!-- getgallerylist -->
 	<select id="getgallerylist" resultType="GalleryVO">
 	
+	<![CDATA[
+		 select a.no, a.user_no, a.content, a.filepath, a.orgname, a.savename, a.filesize, b.name
+         from gallery a join users b on a.user_no=b.no
+			
+	]]>
 	
 	</select>
 

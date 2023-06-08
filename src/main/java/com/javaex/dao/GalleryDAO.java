@@ -14,12 +14,12 @@ import com.javaex.vo.GalleryVO;
 public class GalleryDAO {
 
 	@Autowired
-	private SqlSession session;
+	private SqlSession sqlSession;
 	
 	public List<GalleryVO> getGalleryList(){
 		System.out.println("GalleryDAO getGalleryList()");
 		
-		List<GalleryVO> galleryList = new ArrayList<>();
+		List<GalleryVO> galleryList = sqlSession.selectList("gallery.getgallerylist");
 		
 		return galleryList;
 	}
@@ -27,7 +27,7 @@ public class GalleryDAO {
 	public int insertGallery(GalleryVO vo) {
 		System.out.println("GalleryDAO insertGallery()");
 		
-		return 0;
+		return sqlSession.insert("gallery.insertgallery",vo);
 	}
 	
 

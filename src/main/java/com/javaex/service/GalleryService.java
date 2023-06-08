@@ -27,6 +27,14 @@ public class GalleryService {
 		return galleryList;
 	}
 
+	public GalleryVO getGallery(GalleryVO vo) {
+		System.out.println("GalleryService getGallery()");
+		
+		GalleryVO gallery = galleryDAO.getGallery(vo);
+		
+		return gallery;
+	}
+	
 	// 파일저장위치 정보 업로드
 	public int insertGallery(MultipartFile file, GalleryVO vo) {
 		System.out.println("FileUploadService fileUpload()");

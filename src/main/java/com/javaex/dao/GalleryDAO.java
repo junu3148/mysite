@@ -24,6 +24,14 @@ public class GalleryDAO {
 		return galleryList;
 	}
 	
+	public GalleryVO getGallery(GalleryVO vo) {
+		System.out.println("GalleryDAO getGallery()");
+		
+		GalleryVO gallery = sqlSession.selectOne("gallery.getgallery",vo);
+		
+		return gallery;
+	}
+	
 	public int insertGallery(GalleryVO vo) {
 		System.out.println("GalleryDAO insertGallery()");
 		

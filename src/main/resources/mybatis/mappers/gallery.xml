@@ -51,8 +51,17 @@
 	
 	</select>
 
-
-
+	<!-- getgallery -->
+	<select id="getgallery" parameterType="GalleryVO" resultType="GalleryVO">
+	
+	<![CDATA[
+	
+		 select a.no, a.user_no as userNo, a.content, a.filepath, a.orgname, a.savename, a.filesize, b.name
+         from gallery a join users b on a.user_no=b.no where a.no = #{no}
+			
+	]]>
+	
+	</select>
 
 
 </mapper>

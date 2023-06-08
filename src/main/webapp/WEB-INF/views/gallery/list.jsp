@@ -66,13 +66,13 @@
 
 
 					<ul id="viewArea">
-
 						<!-- 이미지반복영역 -->
 						<c:forEach items="${galleryList}" var="gallery">
 							<li>
-								<div class="view">
+								<div class="view" data-no="${gallery.no}">
 									<img class="imgItem"
-										src="${pageContext.request.contextPath}/upload/${gallery.saveName}">
+										src="${pageContext.request.contextPath}/upload/${gallery.saveName}" >
+										
 									<div class="imgWriter">
 										작성자: <strong>${gallery.name}</strong>
 									</div>
@@ -152,7 +152,7 @@
 				<div class="modal-body">
 
 					<div class="formgroup">
-						<img id="viewModelImg" src="">
+						<img id="viewModelImg" src="" style="max-width: 200px;">
 						<!-- ajax로 처리 : 이미지출력 위치-->
 					</div>
 
@@ -163,10 +163,11 @@
 				</div>
 				<form method="" action="">
 					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" id="btnDel" >삭제</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-						<button type="button" class="btn btn-danger" id="btnDel">삭제</button>
+						
 					</div>
-
+					<input id="hiddenNo" type="hidden" name="no" value=""/>	
 
 				</form>
 
@@ -181,12 +182,72 @@
 </body>
 
 <script type="text/javascript">
+
+	/* 인서트 모달 이벤트처리 */
 	$("#btnImgUpload").on("click", function() {
 		console.log("이미지올리기")
 
 		$("#addModal").modal("show");
 
 	});
+	
+	$(".view").on("click",function(){
+				
+		var no = $(this).data("no");
+				
+		var galleryVO = {
+			no : no
+		};
+		
+		$.ajax({
+			
+			url : "${pageContext.request.contextPath }/gallery/getgallery",		
+			type : "post",
+			//contentType : "application/json",
+			data : galleryVO,
+
+			dataType : "json",
+			success : function(jsonResult){
+				console.log(jsonResult)
+				
+				//사진경로 삽입
+				var saveName = "${pageContext.request.contextPath}/upload/"+jsonResult.data.saveName ;
+				$("#viewModelImg").attr("src", saveName);
+				
+				//내용 삽입
+				var content = jsonResult.data.content;
+				$("#viewModelContent").text(content);
+				
+				//no 삽입
+				var no = jsonResult.data.no;
+				$("#hiddenNo").val(no);
+				
+				//삭제창 띄우기
+				var userNo = $("[name='userNo']").val();
+				if(userNo==jsonResult.data.userNo){
+					$("#btnDel").show();
+				}else{
+					$("#btnDel").hide();
+				}
+				
+				
+				//모달창 띄우기
+				$("#viewModal").modal("show");
+				
+				//$(".formgroup").remove();
+								
+				
+				/*성공시 처리해야될 코드 작성*/
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+	});
+	
+	
+	
 </script>
 
 

@@ -2,8 +2,6 @@ package com.javaex.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,11 +9,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.GalleryService;
 import com.javaex.vo.GalleryVO;
-import com.javaex.vo.UserVO;
+import com.javaex.vo.JsonResult;
 
 @Controller
 @RequestMapping(value="/gallery")
@@ -33,6 +32,20 @@ public class GalleryController {
 		moel.addAttribute("galleryList", galleryList);
 		
 		return "/gallery/list";
+	}
+	
+	@RequestMapping(value="/getgallery", method = {RequestMethod.GET,RequestMethod.POST})
+	@ResponseBody
+	public JsonResult getGallery(@ModelAttribute GalleryVO vo) {
+		System.out.println("galleryList()");
+		
+		GalleryVO galleryVO = galleryService.getGallery(vo);
+		
+		JsonResult jsonResult = new JsonResult();
+		
+		jsonResult.success(galleryVO);
+		
+		return jsonResult;
 	}
 	
 	@RequestMapping(value="/insert", method = {RequestMethod.GET,RequestMethod.POST})

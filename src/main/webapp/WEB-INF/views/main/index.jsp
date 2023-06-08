@@ -32,7 +32,7 @@
 			<div id="index">
 
 				<img id="profile-img"
-					src="${pageContext.request.contextPath}/assets/image/profile.jpg">
+					src="${pageContext.request.contextPath}/assets/image/김지원.jpg">
 
 				<div id="greetings">
 					<p class="text-xlarge">

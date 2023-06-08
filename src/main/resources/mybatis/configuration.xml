@@ -9,6 +9,7 @@
    <typeAlias alias="RboardVO" type="com.javaex.vo.RboardVO" />
    <typeAlias alias="Criteria" type="com.javaex.vo.Criteria" />
    <typeAlias alias="FileVO" type="com.javaex.vo.FileVO" />
+   <typeAlias alias="GalleryVO" type="com.javaex.vo.GalleryVO" />
    
     
     </typeAliases>
@@ -19,5 +20,6 @@
         <mapper resource="mybatis/mappers/board.xml" />
         <mapper resource="mybatis/mappers/rboard.xml" />
         <mapper resource="mybatis/mappers/fileupload.xml" />
+        <mapper resource="mybatis/mappers/gallery.xml" />
     </mappers>
 </configuration>

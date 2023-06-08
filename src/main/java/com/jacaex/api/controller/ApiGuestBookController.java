@@ -1,7 +1,6 @@
 package com.jacaex.api.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,6 +46,7 @@ public class ApiGuestBookController {
 		return jsonResult;
 	}
 	
+	//RequestBody는 JSON형식으로 변환된걸 받는방법
 	@RequestMapping(value = "/addList2", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public JsonResult addList2(@RequestBody GuestBookVO vo) { //RequestBody는 JSON형식으로 변환된걸 받는방법
@@ -93,7 +93,6 @@ public class ApiGuestBookController {
 				 
 		jsonResult.success(guestBookVO);
 		
-
 		return jsonResult;
 	}
 	

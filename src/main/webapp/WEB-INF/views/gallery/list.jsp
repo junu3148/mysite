@@ -272,8 +272,7 @@
 						}else{
 							$("#btnDel").hide();
 						}
-						
-						
+																		
 						//모달창 띄우기
 						$("#viewModal").modal("show");
 						

@@ -52,8 +52,8 @@ public class BoardController {
 		System.out.println("write");
 
 		boardService.insertBoard(vo);
-
-		return "redirect:/board/list";
+		
+	    return "redirect:/board/list";
 	}
 
 	// ------------------- delete --------------------

@@ -150,7 +150,7 @@
 					</form>
 					<c:choose>
 						<c:when test="${empty user.id}">
-							<a id="btn_write" href="/mysite3/user/loginForm">글쓰기</a>
+							<a id="btn_write" href="/mysite/user/loginForm">글쓰기</a>
 						</c:when>
 						<c:otherwise>
 							<a id="btn_write" href="./writeForm">글쓰기</a>
